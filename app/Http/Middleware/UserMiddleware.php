@@ -1,4 +1,5 @@
 <?php
+// app/Http/Middleware/UserMiddleware.php
 
 namespace App\Http\Middleware;
 
@@ -10,11 +11,14 @@ class UserMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Cek apakah user sudah login dan rolenya user
+        if (!auth()->check() || auth()->user()->role !== 'user') {
+            abort(403, 'Unauthorized access. User only.');
+        }
+
         return $next($request);
     }
 }
