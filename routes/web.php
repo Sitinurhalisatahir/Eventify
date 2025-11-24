@@ -33,17 +33,24 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/organizers/{user}/approve', [App\Http\Controllers\Admin\OrganizerApprovalController::class, 'approve'])->name('organizers.approve');
     Route::post('/organizers/{user}/reject', [App\Http\Controllers\Admin\OrganizerApprovalController::class, 'reject'])->name('organizers.reject');
     
+    // ✅ TAMBAH: Category Management
+    Route::resource('/categories', App\Http\Controllers\Admin\CategoryController::class);
+    
     // Event Management (Admin bisa manage SEMUA event)
     Route::resource('/events', App\Http\Controllers\Admin\EventController::class);
     
     // Ticket Management
-    Route::resource('/events/{event}/tickets', App\Http\Controllers\Admin\TicketController::class)->except(['index', 'show']);
+    Route::get('/events/{event}/tickets/create', [App\Http\Controllers\Admin\TicketController::class, 'create'])->name('events.tickets.create');
+    Route::post('/events/{event}/tickets', [App\Http\Controllers\Admin\TicketController::class, 'store'])->name('events.tickets.store');
+    Route::get('/tickets/{ticket}/edit', [App\Http\Controllers\Admin\TicketController::class, 'edit'])->name('tickets.edit');
+    Route::patch('/tickets/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('/tickets/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'destroy'])->name('tickets.destroy');
     
     // Booking Management
     Route::get('/bookings', [App\Http\Controllers\Admin\BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{booking}', [App\Http\Controllers\Admin\BookingController::class, 'show'])->name('bookings.show');
     Route::post('/bookings/{booking}/approve', [App\Http\Controllers\Admin\BookingController::class, 'approve'])->name('bookings.approve');
-    Route::post('/bookings/{booking}/cancel', [App\Http\Controllers\Admin\BookingController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/bookings/{booking}/reject', [App\Http\Controllers\Admin\BookingController::class, 'reject'])->name('bookings.reject');
     
     // Reports
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
@@ -63,13 +70,17 @@ Route::middleware(['auth', 'organizer.approved'])->prefix('organizer')->name('or
     Route::resource('/events', App\Http\Controllers\Organizer\EventController::class);
     
     // Ticket Management
-    Route::resource('/events/{event}/tickets', App\Http\Controllers\Organizer\TicketController::class)->except(['index', 'show']);
+    Route::get('/events/{event}/tickets/create', [App\Http\Controllers\Organizer\TicketController::class, 'create'])->name('events.tickets.create');
+    Route::post('/events/{event}/tickets', [App\Http\Controllers\Organizer\TicketController::class, 'store'])->name('events.tickets.store');
+    Route::get('/tickets/{ticket}/edit', [App\Http\Controllers\Organizer\TicketController::class, 'edit'])->name('tickets.edit');
+    Route::patch('/tickets/{ticket}', [App\Http\Controllers\Organizer\TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('/tickets/{ticket}', [App\Http\Controllers\Organizer\TicketController::class, 'destroy'])->name('tickets.destroy');
     
     // Booking Management (Hanya untuk event sendiri)
     Route::get('/bookings', [App\Http\Controllers\Organizer\BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{booking}', [App\Http\Controllers\Organizer\BookingController::class, 'show'])->name('bookings.show');
     Route::post('/bookings/{booking}/approve', [App\Http\Controllers\Organizer\BookingController::class, 'approve'])->name('bookings.approve');
-    Route::post('/bookings/{booking}/cancel', [App\Http\Controllers\Organizer\BookingController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/bookings/{booking}/reject', [App\Http\Controllers\Organizer\BookingController::class, 'reject'])->name('bookings.reject');
     
     // Analytics (OPTIONAL dari soal)
     Route::get('/analytics', [App\Http\Controllers\Organizer\AnalyticsController::class, 'index'])->name('analytics.index');
@@ -116,6 +127,7 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     
     // Booking
     Route::get('/bookings', [App\Http\Controllers\User\BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/create', [App\Http\Controllers\User\BookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [App\Http\Controllers\User\BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{booking}', [App\Http\Controllers\User\BookingController::class, 'show'])->name('bookings.show');
     Route::delete('/bookings/{booking}', [App\Http\Controllers\User\BookingController::class, 'destroy'])->name('bookings.destroy');
