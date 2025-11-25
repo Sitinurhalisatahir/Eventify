@@ -1,4 +1,5 @@
 <?php
+// app/Http/Requests/UpdateEventRequest.php
 
 namespace App\Http\Requests;
 
@@ -11,18 +12,39 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'required|string',
+            'event_date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'nullable|in:draft,published,cancelled',
+        ];
+    }
+
+    /**
+     * Get custom error messages.
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Event name is required.',
+            'category_id.required' => 'Please select a category.',
+            'category_id.exists' => 'Selected category does not exist.',
+            'description.required' => 'Event description is required.',
+            'event_date.required' => 'Event date is required.',
+            'location.required' => 'Event location is required.',
+            'image.image' => 'The file must be an image.',
+            'image.max' => 'Image size must not exceed 2MB.',
         ];
     }
 }
