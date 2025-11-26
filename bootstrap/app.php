@@ -14,10 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // ✅ DAFTAR MIDDLEWARE CUSTOM (Untuk Role-Based Access)
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            'organizer' => \App\Http\Middleware\OrganizerMiddleware::class,
-            'organizer.approved' => \App\Http\Middleware\OrganizerApprovedMiddleware::class,
-            'user' => \App\Http\Middleware\UserMiddleware::class,
+            'admin' => AdminMiddleware::class,
+            'organizer' =>\OrganizerMiddleware::class,
+            'organizer.approved' => OrganizerApprovedMiddleware::class,
+            'user' => UserMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
