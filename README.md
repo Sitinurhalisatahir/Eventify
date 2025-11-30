@@ -414,20 +414,19 @@ categories (id, name, slug, icon, color)
 
   
 ### **👨‍💻 Akun Default**
-```markdown
-
+``
 **Akun Admin**
 - Email: admin@eventify.com
-- Kata Sandi: password
+- Kata Sandi: password123
 - Fitur: Mengatur semua manajemen tiket dan acara, Dapat menyetujui Organizer, Pending, dan Batalkan
 
 **Akun Organizer** 
-- Email: organizer@eventify.com
-- Kata Sandi: password  
+- Email: organizer1@eventify.com
+- Kata Sandi: password 123
 - Fitur: Manajemen akun event dan tiket sendiri dan Menyetujui Pesanan
 
 **Akun User**
-- Email: user@eventify.com
-- Password: password
+- Email: jane@example.com
+- Kata Sandi: password123
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
 ```
