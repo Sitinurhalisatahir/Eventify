@@ -659,42 +659,38 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-#### Registered User
-- 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
-- ❤️ **Favorite system** - Simpan event favorit
-- ⭐ **Review & rating** - Beri ulasan untuk event yang diikuti
-- 📋 **Riwayat pemesanan** - Lihat semua booking & statusnya
-- 👤 **Profile management** - Kelola akun pribadi
+# 🎪 Dashboard Organizer - Eventify
 
-#### **Admin** 
-- 🎯 **Kontrol penuh sistem** - Kelola semua aspek platform
-- 👥 **Manajemen pengguna** - Approve/reject organizer, kelola roles
-- 📊 **Analytics & laporan** - View penjualan tiket, statistik event
-- 🎫 **Supervisor event** - Bisa edit/hapus event dari organizer mana pun
-- 📈 **Dashboard lengkap** - Overview seluruh sistem
-
-#### **Event Organizer**
-- 🎪 **Manajemen event** - Buat, edit, hapus event sendiri
-- 🎫 **Kelola tiket** - Multiple ticket types dengan harga & kuota berbeda
-- 👀 **View bookings** - Lihat pemesanan untuk event mereka
-- 📱 **Dashboard organizer** - Ringkasan performa event
-- ⏳ **Pending approval** - Sistem approval dari admin sebelum aktif
+<img width="942" height="449" alt="image" src="https://github.com/user-attachments/assets/28311199-3ebe-4628-ad68-8bdea240d8f7" />
 
 
-#### **Guest (Pengunjung)**
-- 🔍 **Jelajahi event** - Browse semua event yang tersedia
-- 📱 **View details** - Lihat detail event lengkap
-- 🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
-- 🔐 **Login required** - Harus login untuk booking & favorit
+### 📊 **Ringkasan Statistik**
+- Memantau jumlah acara yang telah dibuat
+- Melacak total pemesanan tiket yang masuk
+- Menyajikan gambaran keseluruhan kinerja event
 
-### 🎫 Fitur Inti Platform
-- ✅ **Katalog Event** - Pencarian & filter event lengkap
-- ✅ **Multi-type Ticket System** - Berbagai jenis tiket dalam satu event
-- ✅ **Sistem Booking** - Kode booking unik untuk setiap pemesanan
-- ✅ **Favorite Events** - Simpan event favorit untuk nanti
-- ✅ **Review & Rating** - Ulasan dan rating untuk event yang diikuti
-- ✅ **Responsive Design** - Optimal di semua device (mobile-first)
-- ✅ **Real-time Quota** - Pengurangan kuota tiket real-time
-- ✅ **Digital Tickets** - Tiket digital setelah booking approved
-- ✅ **Event Management** - CRUD event dan tiket yang mudah
-- ✅ **User Management** - Approval system untuk organizer
+### 🎯 **Manajemen Acara**
+- **Acara Saya**: Mengelola dan mengedit detail event
+- **Buat Acara**: Membuat event baru dengan formulir lengkap
+- **Klasifikasi Acara**: Memisahkan antara acara populer dan mendatang
+
+### 📈 **Analisis Popularitas**
+- Mengidentifikasi acara yang paling diminati
+- Melihat jumlah pemesanan per event
+- Memantau tingkat engagement peserta
+
+### 📅 **Penjadwalan Acara**
+- Melihat acara yang akan datang
+- Mengatur timeline persiapan event
+- Memiliki pengingat untuk acara mendatang
+
+### 💰 **Manajemen Pemesanan**
+- Memantau pemesanan terbaru
+- Melacak status konfirmasi pemesanan
+- Mengelola pembayaran dan pendapatan
+
+### 🔍 **Pencarian dan Filter**
+- Mencari acara atau pemesanan tertentu
+- Memfilter berdasarkan status
+- Mengelompokkan tampilan acara
+
