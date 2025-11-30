@@ -571,6 +571,94 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
+
+# 🎯 Dashboard & Manajemen Pemesanan Pengguna - Eventify
+
+**Dashboard Profil 🏠**
+
+<img width="1881" height="351" alt="image" src="https://github.com/user-attachments/assets/915baa3c-5fd1-4a1e-b4ad-a87b2a9176e5" />
+
+
+- Sambutan personal dengan nama user
+- Ringkasan statistik pemesanan:
+  - Total Pemesanan
+  - Disetujui
+  - Menunggu
+- Menu navigasi sidebar:
+  - Edit Profile
+  - Pesanan Saya
+  - Logout
+- Info total pengeluaran
+
+---
+
+**Halaman Pemesanan Saya 📋**
+
+<img width="1912" height="913" alt="image" src="https://github.com/user-attachments/assets/e8e6f257-5ea1-4f00-8f24-3629f16d65d9" />
+
+- Filter status pemesanan:
+  - Semua Pemesanan (4)
+  - Menunggu (0)
+  - Disetujui (2)
+  - Dibatalkan (2)
+- Fitur pencarian berdasarkan kode booking/nama acara
+- Tabel detail pemesanan dengan kolom:
+  - Kode PEMESANAN & booking
+  - Nama acara & tiket
+  - Tanggal & waktu
+  - Jumlah harga
+  - Status persetujuan
+  - Aksi lihat detail
+
+**Fitur Utama:**
+✅ Tracking status pemesanan real-time  
+🔍 Sistem pencarian & filter  
+📊 Ringkasan finansial  
+👤 Manajemen profil user  
+🎫 Detail tiket & booking code
+
+---
+
+# 👤 Halaman "Edit Profil" - Eventify
+
+<img width="536" height="432" alt="image" src="https://github.com/user-attachments/assets/fa9fc352-3b33-49db-9905-cae05b040744" />
+
+
+**Fitur Utama:**
+- 📝 **Informasi Dasar**
+  - Nama Lengkap (contoh: "iis")
+  - Nomor Telepon
+  - Foto Profil
+  - Alamat Email (contoh: isi@gmail.com)
+
+- 🖼️ **Upload Foto Profil**
+  - Pilih file dengan tombol "Choose File"
+  - Format yang didukung: JPG, PNG
+  - Ukuran maksimal: 2MB
+
+- 🔐 **Ubah Password**
+  - Input password saat ini
+  - Input password baru
+  - Konfirmasi password baru
+  - Validasi keamanan password
+
+**Tombol Aksi:**
+- 💾 **Simpan Perubahan** - Untuk menyimpan semua update profil
+
+**Fitur Keamanan:**
+✅ Update informasi pribadi  
+✅ Ganti foto profil  
+✅ Ubah password dengan konfirmasi  
+✅ Validasi format file upload
+
+**User Experience:**
+- Form yang terorganisir rapi
+- Section terpisah untuk data dasar dan keamanan
+- Petunjuk upload file yang jelas
+- Tombol simpan yang prominent
+
+---
+
 #### Registered User
 - 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
 - ❤️ **Favorite system** - Simpan event favorit
