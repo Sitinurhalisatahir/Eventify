@@ -833,7 +833,6 @@ Komponen halaman pendaftaran user baru:
 <img width="954" height="445" alt="image" src="https://github.com/user-attachments/assets/809af492-287e-4970-b4e3-60183af2b56b" />
 
 ## 🎪 Panel Admin - Management Acara
-
 ## Dashboard Management
 - Mengelola program acara
 - Memverifikasi dan menyetujui organizer
@@ -860,3 +859,47 @@ Komponen halaman pendaftaran user baru:
 - Mengelola preferensi warna
 - Melihat pemesanan terbaru
 - Memfilter acara berdasarkan kategori
+
+---
+
+### 👥 Management Pengguna - Panel Admin
+
+<img width="1900" height="897" alt="image" src="https://github.com/user-attachments/assets/a8871c4c-d1d7-4144-96d3-61223158091f" />
+
+<img width="1911" height="918" alt="image" src="https://github.com/user-attachments/assets/539d73f8-a30b-42d2-b280-efdc86ac5e47" />
+
+
+## Dashboard Management
+- Mengelola data pengguna sistem
+- Memverifikasi dan menyetujui organizer
+- Mengelola kategori pengguna
+- Melihat semua akun pengguna
+- Mengelola status pemesanan user
+- Membuat laporan aktivitas pengguna
+- Menganalisa statistik pengguna
+
+## Statistik Pengguna
+- Memantau total pengguna (7 users)
+- Melihat device yang digunakan (4 computer)
+- Mengelola akses admin (2 admin)
+- Filter pengguna berdasarkan peran
+- Mencari pengguna berdasarkan nama/email
+
+## Manajemen Data Pengguna
+- Melihat daftar semua pengguna
+- Memantau status aktivitas user
+- Melihat tanggal bergabung pengguna
+- Mengelola akses dan peran pengguna
+- Filter dan hapus data pengguna
+
+## Detail Informasi Pengguna
+- Melihat profil lengkap pengguna
+- Memantau informasi kontak (email, telepon)
+- Melihat statistik pemesanan user
+- Memantau total pengeluaran pengguna
+- Melihat riwayat pemesanan terbaru
+- Melacak favorit dan preferensi user
+
+---
+
+
