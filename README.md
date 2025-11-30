@@ -538,14 +538,38 @@ login untuk platform Eventify dengan:
 <img width="949" height="433" alt="image" src="https://github.com/user-attachments/assets/a80fa8d4-4fae-43bb-9ad3-0bb09705c945" />
 
 Komponen halaman pendaftaran user baru:
-• Form data pribadi lengkap 🔐
-• Validasi input email & password ✅
-• Optional phone number field 📱
-• Password confirmation 🔄
-• Navigasi ke halaman login ➡️
+- Form data pribadi lengkap 🔐
+- Validasi input email & password ✅
+- Optional phone number field 📱
+- Password confirmation 🔄
+- Navigasi ke halaman login ➡️
 
 ---
 
+### 🎯 Dashboard Pengguna - Eventify
+
+**Dashboard Utama 🏠**
+
+<img width="1153" height="877" alt="image" src="https://github.com/user-attachments/assets/82958b77-5d11-42a5-a55c-a14e2518a42e" />
+
+- Ringkasan pemesanan & status
+- Tabel pesanan terbaru
+- Sorotan acara mendatang
+- Daftar acara favorit
+
+---
+  
+**Halaman Favorit ❤️**
+
+<img width="1873" height="853" alt="image" src="https://github.com/user-attachments/assets/77ada7fb-2942-4a98-9d9f-96245533830e" />
+
+
+- Acara pilihan yang dikurasi
+- Kartu acara detail
+- Metrik harga & minat peserta
+- Manajemen langganan notifikasi
+
+---
 
 #### Registered User
 - 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
