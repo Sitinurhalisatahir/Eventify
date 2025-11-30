@@ -361,4 +361,461 @@ e-ticketing-event/
 ├── vite.config.js
 └── webpack.mix.js
 ```
-
+---
+e-ticketing-event/
+│
+├── app/
+│   ├── Console/
+│   │   └── Kernel.php
+│   ├── Exceptions/
+│   │   └── Handler.php
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/
+│   │   │   │   ├── AuthenticatedSessionController.php
+│   │   │   │   ├── ConfirmablePasswordController.php
+│   │   │   │   ├── EmailVerificationNotificationController.php
+│   │   │   │   ├── EmailVerificationPromptController.php
+│   │   │   │   ├── NewPasswordController.php
+│   │   │   │   ├── PasswordController.php
+│   │   │   │   ├── PasswordResetLinkController.php
+│   │   │   │   ├── RegisteredUserController.php
+│   │   │   │   ├── VerifyEmailController.php
+│   │   │   │   └── ProfileController.php
+│   │   │   │
+│   │   │   ├── Admin/
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── UserController.php
+│   │   │   │   ├── OrganizerApprovalController.php
+│   │   │   │   ├── CategoryController.php
+│   │   │   │   ├── EventController.php
+│   │   │   │   ├── TicketController.php
+│   │   │   │   ├── BookingController.php
+│   │   │   │   ├── ReportController.php
+│   │   │   │   └── AnalyticsController.php
+│   │   │   │
+│   │   │   ├── Organizer/
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── EventController.php
+│   │   │   │   ├── TicketController.php
+│   │   │   │   ├── BookingController.php
+│   │   │   │   └── AnalyticsController.php
+│   │   │   │
+│   │   │   ├── User/
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── BookingController.php
+│   │   │   │   ├── FavoriteController.php
+│   │   │   │   └── ReviewController.php
+│   │   │   │
+│   │   │   ├── Controller.php
+│   │   │   ├── HomeController.php
+│   │   │   ├── EventController.php
+│   │   │   ├── ProfileController.php
+│   │   │   └── ReviewController.php
+│   │   │
+│   │   ├── Middleware/
+│   │   │   ├── AdminMiddleware.php
+│   │   │   ├── OrganizerMiddleware.php
+│   │   │   ├── OrganizerApprovedMiddleware.php
+│   │   │   ├── UserMiddleware.php
+│   │   │   ├── Authenticate.php
+│   │   │   ├── EncryptCookies.php
+│   │   │   ├── PreventRequestsDuringMaintenance.php
+│   │   │   ├── TrimStrings.php
+│   │   │   ├── TrustHosts.php
+│   │   │   ├── TrustProxies.php
+│   │   │   └── ValidateSignature.php
+│   │   │
+│   │   └── Requests/
+│   │       ├── ProfileUpdateRequest.php
+│   │       ├── StoreCategoryRequest.php
+│   │       ├── UpdateCategoryRequest.php
+│   │       ├── StoreEventRequest.php
+│   │       ├── UpdateEventRequest.php
+│   │       ├── StoreTicketRequest.php
+│   │       ├── UpdateTicketRequest.php
+│   │       ├── StoreBookingRequest.php
+│   │       ├── UpdateBookingRequest.php
+│   │       └── StoreReviewRequest.php
+│   │
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Category.php
+│   │   ├── Event.php
+│   │   ├── Ticket.php
+│   │   ├── Booking.php
+│   │   ├── Favorite.php
+│   │   ├── Review.php
+│   │   └── Profile.php
+│   │
+│   ├── Providers/
+│   │   ├── AppServiceProvider.php
+│   │   ├── AuthServiceProvider.php
+│   │   ├── BroadcastServiceProvider.php
+│   │   ├── EventServiceProvider.php
+│   │   └── RouteServiceProvider.php
+│   │
+│   └── View/
+│       └── Components/
+│           ├── AppLayout.php
+│           └── GuestLayout.php
+│
+├── bootstrap/
+│   ├── app.php
+│   └── cache/
+│       ├── packages.php
+│       └── services.php
+│
+├── config/
+│   ├── app.php
+│   ├── auth.php
+│   ├── broadcasting.php
+│   ├── cache.php
+│   ├── cors.php
+│   ├── database.php
+│   ├── filesystems.php
+│   ├── hashing.php
+│   ├── logging.php
+│   ├── mail.php
+│   ├── queue.php
+│   ├── sanctum.php
+│   ├── services.php
+│   ├── session.php
+│   └── view.php
+│
+├── database/
+│   ├── factories/
+│   │   ├── UserFactory.php
+│   │   ├── CategoryFactory.php
+│   │   ├── EventFactory.php
+│   │   ├── TicketFactory.php
+│   │   ├── BookingFactory.php
+│   │   ├── FavoriteFactory.php
+│   │   └── ReviewFactory.php
+│   │
+│   ├── migrations/
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 0001_01_01_000001_create_cache_table.php
+│   │   ├── 0001_01_01_000002_create_jobs_table.php
+│   │   ├── 2025_11_22_054723_add_organizer_fields_to_users_table.php
+│   │   ├── 2025_11_22_054730_create_categories_table.php
+│   │   ├── 2025_11_22_054740_create_events_table.php
+│   │   ├── 2025_11_22_054752_create_tickets_table.php
+│   │   ├── 2025_11_22_054806_create_bookings_table.php
+│   │   ├── 2025_11_22_054820_create_favorites_table.php
+│   │   ├── 2025_11_22_055203_create_reviews_table.php
+│   │   └── 2025_11_29_102625_add_profile_image_to_users_table.php
+│   │
+│   └── seeders/
+│       ├── DatabaseSeeder.php
+│       ├── AdminSeeder.php
+│       ├── CategorySeeder.php
+│       ├── OrganizerSeeder.php
+│       ├── UserSeeder.php
+│       ├── EventSeeder.php
+│       ├── TicketSeeder.php
+│       ├── BookingSeeder.php
+│       ├── FavoriteSeeder.php
+│       └── ReviewSeeder.php
+│
+├── public/
+│   ├── index.php
+│   ├── .htaccess
+│   ├── favicon.ico
+│   ├── robots.txt
+│   └── storage/ → Symlink to storage/app/public
+│
+├── resources/
+│   ├── css/
+│   │   └── app.css
+│   │
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── bootstrap.js
+│   │   └── components/
+│   │       ├── event-filter.js
+│   │       ├── booking-modal.js
+│   │       ├── favorite-toggle.js
+│   │       └── review-rating.js
+│   │
+│   └── views/
+│       │
+│       ├── components/
+│       │   │
+│       │   ├── cards/
+│       │   │   ├── event-card.blade.php
+│       │   │   ├── ticket-card.blade.php
+│       │   │   ├── booking-card.blade.php
+│       │   │   ├── stats-card.blade.php
+│       │   │   ├── user-card.blade.php
+│       │   │   ├── organizer-card.blade.php
+│       │   │   └── review-card.blade.php
+│       │   │
+│       │   ├── ui/
+│       │   │   ├── button.blade.php
+│       │   │   ├── badge.blade.php
+│       │   │   ├── input.blade.php
+│       │   │   ├── textarea.blade.php
+│       │   │   ├── select.blade.php
+│       │   │   ├── alert.blade.php
+│       │   │   ├── modal.blade.php
+│       │   │   ├── breadcrumb.blade.php
+│       │   │   ├── checkbox-group.blade.php
+│       │   │   ├── file-upload.blade.php
+│       │   │   ├── radio.blade.php
+│       │   │   ├── search-bar.blade.php
+│       │   │   ├── pagination.blade.php
+│       │   │   ├── loading-spinner.blade.php
+│       │   │   └── empty-state.blade.php
+│       │   │
+│       │   ├── layout/
+│       │   │   ├── navbar.blade.php
+│       │   │   ├── footer.blade.php
+│       │   │   ├── sidebar-admin.blade.php
+│       │   │   ├── sidebar-organizer.blade.php
+│       │   │   ├── sidebar-user.blade.php
+│       │   │   └── mobile-menu.blade.php
+│       │   │
+│       │   └── forms/
+│       │       ├── event-form.blade.php
+│       │       ├── ticket-form.blade.php
+│       │       ├── booking-form.blade.php
+│       │       ├── review-form.blade.php
+│       │       └── category-form.blade.php
+│       │
+│       ├── layouts/
+│       │   ├── app.blade.php
+│       │   ├── guest.blade.php
+│       │   ├── admin.blade.php
+│       │   ├── organizer.blade.php
+│       │   └── user.blade.php
+│       │
+│       ├── auth/
+│       │   ├── login.blade.php
+│       │   ├── register.blade.php
+│       │   ├── forgot-password.blade.php
+│       │   ├── reset-password.blade.php
+│       │   ├── verify-email.blade.php
+│       │   ├── confirm-password.blade.php
+│       │   └── pending.blade.php
+│       │
+│       ├── home/
+│       │   ├── index.blade.php
+│       │   └── partials/
+│       │       ├── hero.blade.php
+│       │       ├── featured-events.blade.php
+│       │       ├── categories.blade.php
+│       │       ├── upcoming-events.blade.php
+│       │       └── statistics.blade.php
+│       │
+│       ├── events/
+│       │   ├── index.blade.php
+│       │   ├── show.blade.php
+│       │   └── partials/
+│       │       ├── filter-sidebar.blade.php
+│       │       ├── event-grid.blade.php
+│       │       ├── event-list.blade.php
+│       │       ├── event-hero.blade.php
+│       │       ├── event-details.blade.php
+│       │       ├── organizer-info.blade.php
+│       │       ├── ticket-list.blade.php
+│       │       ├── booking-sidebar.blade.php
+│       │       ├── review-list.blade.php
+│       │       ├── review-form.blade.php
+│       │       ├── similar-events.blade.php
+│       │       └── sort-header.blade.php
+│       │
+│       ├── admin/
+│       │   │
+│       │   ├── dashboard.blade.php
+│       │   │
+│       │   ├── users/
+│       │   │   ├── index.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── user-table.blade.php
+│       │   │       └── user-stats.blade.php
+│       │   │
+│       │   ├── organizers/
+│       │   │   ├── index.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── organizer-table.blade.php
+│       │   │       └── approval-actions.blade.php
+│       │   │
+│       │   ├── categories/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── partials/
+│       │   │       ├── category-table.blade.php
+│       │   │       └── category-form-fields.blade.php
+│       │   │
+│       │   ├── events/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── event-table.blade.php
+│       │   │       ├── event-stats.blade.php
+│       │   │       └── event-form-fields.blade.php
+│       │   │
+│       │   ├── tickets/
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── partials/
+│       │   │       └── ticket-form-fields.blade.php
+│       │   │
+│       │   ├── bookings/
+│       │   │   ├── index.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── booking-table.blade.php
+│       │   │       ├── booking-details.blade.php
+│       │   │       └── booking-actions.blade.php
+│       │   │
+│       │   ├── reports/
+│       │   │   ├── index.blade.php
+│       │   │   ├── sales.blade.php
+│       │   │   ├── events.blade.php
+│       │   │   └── partials/
+│       │   │       ├── report-filters.blade.php
+│       │   │       ├── sales-chart.blade.php
+│       │   │       └── event-stats.blade.php
+│       │   │
+│       │   └── analytics/
+│       │       ├── index.blade.php
+│       │       └── partials/
+│       │           ├── overview-cards.blade.php
+│       │           ├── charts.blade.php
+│       │           └── top-events.blade.php
+│       │
+│       ├── organizer/
+│       │   │
+│       │   ├── dashboard.blade.php
+│       │   │
+│       │   ├── events/
+│       │   │   ├── index.blade.php
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── event-table.blade.php
+│       │   │       ├── event-stats.blade.php
+│       │   │       └── event-form-fields.blade.php
+│       │   │
+│       │   ├── tickets/
+│       │   │   ├── create.blade.php
+│       │   │   ├── edit.blade.php
+│       │   │   └── partials/
+│       │   │       └── ticket-form-fields.blade.php
+│       │   │
+│       │   ├── bookings/
+│       │   │   ├── index.blade.php
+│       │   │   ├── show.blade.php
+│       │   │   └── partials/
+│       │   │       ├── booking-table.blade.php
+│       │   │       ├── booking-details.blade.php
+│       │   │       └── booking-actions.blade.php
+│       │   │
+│       │   └── analytics/
+│       │       ├── index.blade.php
+│       │       └── partials/
+│       │           ├── overview-cards.blade.php
+│       │           ├── charts.blade.php
+│       │           └── booking-trends.blade.php
+│       │
+│       └── user/
+│           │
+│           ├── dashboard.blade.php
+│           │
+│           ├── profile/
+│           │   ├── edit.blade.php
+│           │   ├── show.blade.php
+│           │   └── partials/
+│           │       ├── profile-form.blade.php
+│           │       └── profile-stats.blade.php
+│           │
+│           ├── bookings/
+│           │   ├── index.blade.php
+│           │   ├── show.blade.php
+│           │   ├── create.blade.php
+│           │   └── partials/
+│           │       ├── booking-table.blade.php
+│           │       ├── booking-details.blade.php
+│           │       ├── booking-actions.blade.php
+│           │       └── ticket-digital.blade.php
+│           │
+│           ├── favorites/
+│           │   ├── index.blade.php
+│           │   └── partials/
+│           │       └── favorites-grid.blade.php
+│           │
+│           └── reviews/
+│               ├── create.blade.php
+│               ├── edit.blade.php
+│               └── partials/
+│                   └── review-form-fields.blade.php
+│
+├── routes/
+│   ├── web.php
+│   ├── api.php
+│   ├── console.php
+│   └── auth.php
+│
+├── storage/
+│   ├── app/
+│   │   ├── public/
+│   │   │   ├── events/
+│   │   │   ├── tickets/
+│   │   │   ├── categories/
+│   │   │   ├── profiles/
+│   │   │   └── reviews/
+│   │   └── framework/
+│   │       ├── cache/
+│   │       ├── sessions/
+│   │       ├── testing/
+│   │       └── views/
+│   ├── fonts/
+│   ├── logs/
+│   └── temp/
+│
+├── tests/
+│   ├── Unit/
+│   │   ├── ExampleTest.php
+│   │   ├── UserTest.php
+│   │   ├── EventTest.php
+│   │   ├── TicketTest.php
+│   │   ├── BookingTest.php
+│   │   └── ReviewTest.php
+│   │
+│   ├── Feature/
+│   │   ├── ExampleTest.php
+│   │   ├── AuthTest.php
+│   │   ├── AdminTest.php
+│   │   ├── OrganizerTest.php
+│   │   ├── UserTest.php
+│   │   ├── EventTest.php
+│   │   ├── BookingTest.php
+│   │   └── ReviewTest.php
+│   │
+│   └── TestCase.php
+│
+├── vendor/
+│
+├── .env
+├── .env.example
+├── .gitattributes
+├── .gitignore
+├── artisan
+├── composer.json
+├── composer.lock
+├── package.json
+├── phpunit.xml
+├── README.md
+├── server.php
+├── tailwind.config.js
+├── vite.config.js
+└── webpack.mix.js
+```
