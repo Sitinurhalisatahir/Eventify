@@ -380,7 +380,7 @@ categories (id, name, slug, icon, color)
   └─1:N─► events
   ```
 
-### 7. 🛠️ Installatsi & Setup
+### 🛠️ Installatsi & Setup
 1. Clone repository
 git clone https://github.com/Sitinurhalisatahir/eventify.git
 cd eventify
