@@ -384,12 +384,12 @@ categories (id, name, slug, icon, color)
   └─1:N─► events
   ```
 
-### **7. 🛠️ Installation & Setup**
+### **7. 🛠️ Installatsi & Setup**
 ```markdown
 ## 🛠️ Installation
 
 ```bash
-# 1. Clone repository
+1. Clone repository
 git clone https://github.com/username/eventify.git
 cd eventify
 
@@ -408,3 +408,4 @@ php artisan storage:link
 
 # 5. Serve application
 php artisan serve
+```
