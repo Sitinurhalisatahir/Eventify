@@ -451,6 +451,8 @@ categories (id, name, slug, icon, color)
 - Dilengkapi badge "POPULAR"
 
 ### **🎉 Kategori**
+<img width="929" height="424" alt="image" src="https://github.com/user-attachments/assets/eb2e7098-fc9f-40d1-a38a-fb56d6b99cd0" />
+
 berbagai macam kategori:
 - Musik
 - Kuliner
@@ -458,27 +460,35 @@ berbagai macam kategori:
 - olahraga
 - Teater
 - Seni
-- Seminae
+- Seminar
 
 #### **📅 Acara Mendatang**
+<img width="939" height="414" alt="image" src="https://github.com/user-attachments/assets/c9504d81-55c3-4730-9678-56c050c9a027" />
+
 - Event yang akan datang dalam 30 hari
 - Sort by tanggal terdekat
 - Countdown timer ke event
 
 #### **⏳ Acara Telah Berlangsung**
+<img width="955" height="439" alt="image" src="https://github.com/user-attachments/assets/f09149cb-5c7d-41d8-88f0-facd2f489e86" />
+
 - Archive event yang sudah selesai
 - Bisa lihat review & rating
-- Historical data untuk reference
+
 
 ### Guest (Pengunjung)
 - 🔍 **Jelajahi event** - Browse semua event yang tersedia
 <img width="926" height="361" alt="image" src="https://github.com/user-attachments/assets/eb6dc7a3-67dd-4a85-a475-efddab0c7436" />
 
 - 📱 **View details** - Lihat detail event lengkap
-
+<img width="956" height="449" alt="image" src="https://github.com/user-attachments/assets/966aaca0-9f5d-47b5-a5d1-8be7d83db0e8" />
+<img width="430" height="398" alt="image" src="https://github.com/user-attachments/assets/f2db4050-681b-4196-8448-210523864309" />
 
 - 🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
+  <img width="211" height="336" alt="image" src="https://github.com/user-attachments/assets/b42662bb-34bc-4ce7-a295-d46c16decaa4" />
+
 - 🔐 **Login required** - Harus login untuk booking & favorit
+  <img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
 
 #### Registered User
 - 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
