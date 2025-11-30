@@ -409,10 +409,10 @@ categories (id, name, slug, icon, color)
   ```
  ---
 
- ```
+ 
   ### 🗄 Relasi Database 
   <img width="449" height="368" alt="image" src="https://github.com/user-attachments/assets/fac259bc-13ea-472f-8a2e-2ed712b5a24d" />
-```
+
 
 ----
   
@@ -503,8 +503,12 @@ berbagai macam kategori:
 
   ---
 
-🔐 **Login required** - Harus login untuk booking & favorit
+🔐 **Login required** 
   <img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
+
+Harus login untuk booking & favorit
+
+---
 
 #### Registered User
 - 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
