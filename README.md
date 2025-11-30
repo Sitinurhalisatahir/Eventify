@@ -501,6 +501,9 @@ berbagai macam kategori:
 ---
 
 🔎 **Search & filter** 
+
+
+
 <img width="190" height="396" alt="image" src="https://github.com/user-attachments/assets/e2d70344-e6b0-48b3-a1ed-379632831a4e"/>
 
   
@@ -509,6 +512,9 @@ berbagai macam kategori:
 ---
 
 🔐 **Login required** 
+
+
+
 <img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
 
 - Harus login untuk booking & favorit
