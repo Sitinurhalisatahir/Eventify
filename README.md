@@ -327,11 +327,7 @@ e-ticketing-event/
 │   │   │   ├── tickets/
 │   │   │   ├── profiles/
 │   │   │  
-│   │   └── framework/
-│   │       ├── cache/
-│   │       ├── sessions/
-│   │       ├── testing/
-│   │       └── views/
+│   │   
 │   ├── fonts/
 │   ├── logs/
 │   └── temp/
@@ -384,25 +380,25 @@ categories (id, name, slug, icon, color)
   └─1:N─► events
   ```
 
-### **7. 🛠️ Installatsi & Setup**
-# 1. Clone repository
+### 7. 🛠️ Installatsi & Setup
+1. Clone repository
 git clone https://github.com/Sitinurhalisatahir/eventify.git
 cd eventify
 
-# 2. Install dependencies
+2. Install dependencies
 composer 
 require laravel/breeze --dev
 npm install && npm run build
 
-# 3. Environment setup
+3. Environment setup
 cp .env.example .env
 DB_DATABASE=db_eventify
 
-# 4. Database configuration
-# Edit .env file dengan database credentials
+4. Database configuration
+Edit .env file dengan database credentials
 php artisan migrate --seed
 php artisan storage:link
 
-# 5. Serve application
+5. Serve application
 php artisan serve
 ```
