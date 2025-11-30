@@ -445,6 +445,7 @@ categories (id, name, slug, icon, color)
 
 #### **🎪 Acara Populer**
 <img width="467" height="392" alt="image" src="https://github.com/user-attachments/assets/8c83fdd8-f16b-4b46-a998-4f4e89c4a2bd" />
+
 - Menampilkan event dengan booking terbanyak
 - Rating tertinggi dari user
 - Dilengkapi badge "POPULAR"
