@@ -572,7 +572,7 @@ Komponen halaman pendaftaran user baru:
 ---
 
 
-# 🎯 Dashboard & Manajemen Pemesanan Pengguna - Eventify
+### 🎯 Dashboard & Manajemen Pemesanan Pengguna - Eventify
 
 **Dashboard Profil 🏠**
 
@@ -619,7 +619,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-# 👤 Halaman "Edit Profil" - Eventify
+### 👤 Halaman "Edit Profil" - Eventify
 
 <img width="536" height="432" alt="image" src="https://github.com/user-attachments/assets/fa9fc352-3b33-49db-9905-cae05b040744" />
 
@@ -643,7 +643,7 @@ Komponen halaman pendaftaran user baru:
   - Validasi keamanan password
 
 **Tombol Aksi:**
-- 💾 **Simpan Perubahan** - Untuk menyimpan semua update profil
+💾 **Simpan Perubahan** - Untuk menyimpan semua update profil
 
 **Fitur Keamanan:**
 ✅ Update informasi pribadi  
