@@ -520,6 +520,18 @@ berbagai macam kategori:
 - Harus login untuk booking & favorit
 
 ---
+# Antarmuka Login Eventify
+
+<img width="926" height="430" alt="image" src="https://github.com/user-attachments/assets/4702dc6e-fbe7-4fd2-841e-3f75b7e3ab28" />
+
+
+UI login yang bersih untuk platform Eventify dengan:
+- Form autentikasi pengguna
+- Opsi "Ingat saya"
+- Fitur lupa kata sandi
+- Navigasi ke pendaftaran akun baru
+
+---
 
 #### Registered User
 - 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
