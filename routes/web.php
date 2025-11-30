@@ -14,7 +14,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Event Catalog & Detail
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // ========================================
 // ADMIN ROUTES
@@ -57,6 +57,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Analytics (OPTIONAL)
     Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
+   
 });
 
 // ========================================
@@ -138,19 +139,37 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     Route::delete('/favorites/{event}', [App\Http\Controllers\User\FavoriteController::class, 'destroy'])->name('favorites.destroy');
     
     // Reviews (OPTIONAL)
-    Route::post('/events/{event}/reviews', [App\Http\Controllers\User\ReviewController::class, 'store'])->name('reviews.store');
+   // ⭐⭐ PASTIKAN ADA ROUTE INI ⭐⭐
+    Route::get('/events/{event}/reviews/create/{booking}', [App\Http\Controllers\User\ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/events/{event}/reviews/', [App\Http\Controllers\User\ReviewController::class, 'store'])->name('reviews.store');
     Route::get('/reviews/{review}/edit', [App\Http\Controllers\User\ReviewController::class, 'edit'])->name('reviews.edit');
     Route::patch('/reviews/{review}', [App\Http\Controllers\User\ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [App\Http\Controllers\User\ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
-
+ 
 // ========================================
 // PROFILE ROUTES (Semua role bisa akses)
 // ========================================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update'); 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/image', [ProfileController::class, 'deleteImage'])->name('profile.image.delete'); // ✅ BARU
+    
+});
+
+Route::get('/test-profile', function() {
+    return view('test-profile');
+});
+
+Route::post('/test-profile', function(Request $request) {
+    // Simpan file manual
+    if ($request->hasFile('profile_image')) {
+        $path = $request->file('profile_image')->store('test-uploads', 'public');
+        return "File berhasil diupload: " . $path;
+    }
+    return "Tidak ada file";
 });
 
 // ========================================

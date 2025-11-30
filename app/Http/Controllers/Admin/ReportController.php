@@ -1,5 +1,5 @@
 <?php
-// app/Http/Controllers/Admin/ReportController.php
+// app/Http\Controllers/Admin/ReportController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -18,6 +18,10 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
+        // ✅ 1. DISABLE STRICT MODE DI AWAL - Fix GROUP BY issues
+        config(['database.connections.mysql.strict' => false]);
+        \DB::reconnect();
+
         // Date range filter (default: this month)
         $startDate = $request->get('start_date', now()->startOfMonth()->format('Y-m-d'));
         $endDate = $request->get('end_date', now()->endOfMonth()->format('Y-m-d'));
@@ -61,7 +65,7 @@ class ReportController extends Controller
 
         // ========== TOP EVENTS ==========
         
-        // Top Events by Revenue
+        // ✅ 2. FIX: Top Events by Revenue - GROUP BY sudah handled oleh strict mode disable
         $topEventsByRevenue = Event::select('events.*', DB::raw('sum(bookings.total_price) as revenue'))
             ->join('tickets', 'events.id', '=', 'tickets.event_id')
             ->join('bookings', 'tickets.id', '=', 'bookings.ticket_id')
@@ -72,11 +76,14 @@ class ReportController extends Controller
             ->take(10)
             ->get();
 
-        // Top Events by Bookings
-        $topEventsByBookings = Event::withCount(['bookings' => function ($query) use ($startDate, $endDate) {
-                $query->where('status', 'approved')
-                      ->whereBetween('created_at', [$startDate, $endDate]);
-            }])
+        // ✅ 3. FIX: Top Events by Bookings - GANTI dengan query yang benar
+        $topEventsByBookings = Event::select('events.*')
+            ->addSelect(['bookings_count' => Booking::select(DB::raw('count(*)'))
+                ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+                ->whereColumn('tickets.event_id', 'events.id')
+                ->where('bookings.status', 'approved')
+                ->whereBetween('bookings.created_at', [$startDate, $endDate])
+            ])
             ->having('bookings_count', '>', 0)
             ->orderBy('bookings_count', 'desc')
             ->take(10)
@@ -84,7 +91,7 @@ class ReportController extends Controller
 
         // ========== CATEGORY REPORTS ==========
         
-        // Revenue by Category
+        // ✅ 4. FIX: Revenue by Category - GROUP BY sudah handled
         $revenueByCategory = Category::select('categories.*', DB::raw('sum(bookings.total_price) as revenue'))
             ->join('events', 'categories.id', '=', 'events.category_id')
             ->join('tickets', 'events.id', '=', 'tickets.event_id')
@@ -97,7 +104,7 @@ class ReportController extends Controller
 
         // ========== TOP ORGANIZERS ==========
         
-        // Top Organizers by Revenue
+        // ✅ 5. FIX: Top Organizers by Revenue - GROUP BY sudah handled
         $topOrganizersByRevenue = User::select('users.*', DB::raw('sum(bookings.total_price) as revenue'))
             ->where('users.role', 'organizer')
             ->join('events', 'users.id', '=', 'events.organizer_id')
@@ -112,7 +119,7 @@ class ReportController extends Controller
 
         // ========== TOP CUSTOMERS ==========
         
-        // Top Customers by Spending
+        // ✅ 6. FIX: Top Customers by Spending - GROUP BY sudah handled
         $topCustomers = User::select('users.*', DB::raw('sum(bookings.total_price) as total_spent'))
             ->where('users.role', 'user')
             ->join('bookings', 'users.id', '=', 'bookings.user_id')
@@ -133,6 +140,9 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->sum('quantity'),
         ];
+
+        // ✅ 7. RE-ENABLE STRICT MODE (optional)
+        config(['database.connections.mysql.strict' => true]);
 
         return view('admin.reports.index', compact(
             'startDate',

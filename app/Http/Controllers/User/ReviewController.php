@@ -7,10 +7,30 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Models\Event;
 use App\Models\Review;
+use App\Models\Booking; 
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+
+    public function create(Event $event, Booking $booking)
+    {
+
+        
+        // Authorization: hanya bisa review booking sendiri
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        // Check if booking can be reviewed
+        if (!$booking->canBeReviewed()) {
+            return redirect()
+                ->route('user.bookings.show', $booking)
+                ->with('error', 'This booking cannot be reviewed.');
+        }
+
+        return view('user.reviews.create', compact('event', 'booking'));
+    }
     /**
      * Store a newly created review.
      */

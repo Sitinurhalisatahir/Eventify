@@ -33,18 +33,21 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:user,organizer'], // ✅ Tambah validation role
+            // 'role' => ['required', 'in:user,organizer'],
             'phone' => ['nullable', 'string', 'max:20'],
-            'organizer_description' => ['required_if:role,organizer', 'nullable', 'string', 'max:1000'], // ✅ Wajib jika role organizer
+            // 'organizer_description' => ['required_if:role,organizer', 'nullable', 'string', 'max:1000'],
         ]);
+
+        // ✅ FIX: Tentukan organizer_status
+        $organizerStatus = $request->role === 'organizer' ? 'pending' : null;
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role, // ✅ Simpan role
-            'organizer_status' => $organizerStatus, // ✅ Set status jika organizer
-            'organizer_description' => $request->organizer_description,
+            'role' => 'user',
+            'organizer_status' => null, // ✅ FIX: Variable sudah didefinisikan
+            'organizer_description' => null,
             'phone' => $request->phone,
         ]);
 
@@ -52,10 +55,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // ✅ Redirect berdasarkan role setelah register
-        if ($user->role === 'organizer') {
-            return redirect()->route('organizer.pending')->with('success', 'Your organizer account has been created. Please wait for admin approval.');
-        }
+        // // ✅ Redirect berdasarkan role setelah register
+        // if ($user->role === 'organizer') {
+        //     return redirect()->route('organizer.pending')->with('success', 'Your organizer account has been created. Please wait for admin approval.');
+        // }
 
         // User biasa langsung ke dashboard
         return redirect()->route('user.dashboard')->with('success', 'Account created successfully!');

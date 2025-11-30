@@ -46,10 +46,20 @@ class DashboardController extends Controller
                                  ->get();
         
         // Popular Events (by booking count)
-        $popularEvents = Event::withCount('bookings')
-                              ->orderBy('bookings_count', 'desc')
-                              ->take(5)
-                              ->get();
+        $popularEvents = Event::select('events.*')
+        ->addSelect(['bookings_count' => Booking::select(DB::raw('count(*)'))
+        ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+        ->whereColumn('tickets.event_id', 'events.id')
+        ])
+        ->orderBy('bookings_count', 'desc')
+        ->take(5)
+        ->get();
+        // $popularEvents = Event::withCount('bookings')
+        //                       ->orderBy('bookings_count', 'desc')
+        //                       ->take(5)
+        //                       ->get();
+
+        
         
         // Booking Status Distribution
         $bookingsByStatus = Booking::select('status', DB::raw('count(*) as total'))

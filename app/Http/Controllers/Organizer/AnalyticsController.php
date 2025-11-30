@@ -1,125 +1,167 @@
 <?php
-// app/Http/Controllers/Organizer/AnalyticsController.php
 
 namespace App\Http\Controllers\Organizer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
-    /**
-     * Display analytics for organizer's events.
-     */
     public function index(Request $request)
     {
-        $organizer = auth()->user();
+        // Disable strict mode
+        config(['database.connections.mysql.strict' => false]);
+        \DB::reconnect();
 
-        // ========== REVENUE ANALYTICS ==========
+        $organizerId = auth()->id();
+
+        // Get period from request with default
+        $period = $request->get('period', '12months');
         
-        // Monthly Revenue Trend (last 12 months)
-        $monthlyRevenueTrend = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-            $query->where('organizer_id', $organizer->id);
-        })
-        ->select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('sum(total_price) as revenue')
-        )
-        ->where('status', 'approved')
-        ->where('created_at', '>=', now()->subMonths(12))
-        ->groupBy('year', 'month')
-        ->orderBy('year', 'asc')
-        ->orderBy('month', 'asc')
-        ->get()
-        ->map(function ($item) {
-            return [
-                'month' => date('M Y', mktime(0, 0, 0, $item->month, 1, $item->year)),
-                'revenue' => $item->revenue
-            ];
-        });
+        $monthsBack = match($period) {
+            '3months' => 3,
+            '6months' => 6,
+            default => 12,
+        };
+
+        // Monthly Revenue Trend
+        $monthlyRevenueTrend = Booking::select(
+                DB::raw('YEAR(bookings.created_at) as year'),
+                DB::raw('MONTH(bookings.created_at) as month'),
+                DB::raw('SUM(bookings.total_price) as revenue')
+            )
+            ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->where('bookings.status', 'approved')
+            ->where('bookings.created_at', '>=', now()->subMonths($monthsBack))
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'month' => date('M Y', mktime(0, 0, 0, $item->month, 1, $item->year)),
+                    'revenue' => $item->revenue ?? 0
+                ];
+            });
 
         // Revenue Growth Rate
-        $currentMonthRevenue = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-            $query->where('organizer_id', $organizer->id);
-        })
-        ->where('status', 'approved')
-        ->whereMonth('created_at', now()->month)
-        ->sum('total_price');
+        $currentMonthRevenue = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->where('bookings.status', 'approved')
+            ->whereMonth('bookings.created_at', now()->month)
+            ->whereYear('bookings.created_at', now()->year)
+            ->sum('bookings.total_price') ?? 0;
 
-        $previousMonthRevenue = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-            $query->where('organizer_id', $organizer->id);
-        })
-        ->where('status', 'approved')
-        ->whereMonth('created_at', now()->subMonth()->month)
-        ->sum('total_price');
+        $previousMonthRevenue = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->where('bookings.status', 'approved')
+            ->whereMonth('bookings.created_at', now()->subMonth()->month)
+            ->whereYear('bookings.created_at', now()->subMonth()->year)
+            ->sum('bookings.total_price') ?? 0;
 
         $revenueGrowthRate = $previousMonthRevenue > 0 
             ? (($currentMonthRevenue - $previousMonthRevenue) / $previousMonthRevenue) * 100 
             : 0;
 
-        // ========== EVENT PERFORMANCE ==========
-        
-        // Event Performance (booking rate, revenue)
-        $eventPerformance = $organizer->events()
-            ->with('tickets')
-            ->withCount('bookings')
+        // Monthly Bookings Trend
+        $monthlyBookingsTrend = Booking::select(
+                DB::raw('YEAR(bookings.created_at) as year'),
+                DB::raw('MONTH(bookings.created_at) as month'),
+                DB::raw('COUNT(*) as bookings')
+            )
+            ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->where('bookings.created_at', '>=', now()->subMonths($monthsBack))
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'month' => date('M Y', mktime(0, 0, 0, $item->month, 1, $item->year)),
+                    'bookings' => $item->bookings ?? 0
+                ];
+            });
+
+        // Event Performance
+        $eventPerformance = Event::where('organizer_id', $organizerId)
+            ->where('status', 'published')
+            ->withCount(['bookings' => function ($query) {
+                $query->where('status', 'approved');
+            }])
+            ->orderBy('bookings_count', 'desc')
+            ->take(5)
             ->get()
             ->map(function ($event) {
-                $totalTickets = $event->tickets->sum('quota');
-                $soldTickets = $totalTickets - $event->tickets->sum('quota_remaining');
-                $revenue = $event->bookings()->where('status', 'approved')->sum('total_price');
+                $totalTickets = $event->tickets()->sum('quota');
+                $soldTickets = $totalTickets - $event->tickets()->sum('quota_remaining');
+                
+                $revenue = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+                    ->where('tickets.event_id', $event->id)
+                    ->where('bookings.status', 'approved')
+                    ->sum('bookings.total_price') ?? 0;
                 
                 return [
                     'event' => $event,
-                    'booking_rate' => $totalTickets > 0 ? ($soldTickets / $totalTickets) * 100 : 0,
-                    'sold_tickets' => $soldTickets,
                     'total_tickets' => $totalTickets,
+                    'sold_tickets' => $soldTickets,
+                    'booking_rate' => $totalTickets > 0 ? ($soldTickets / $totalTickets) * 100 : 0,
                     'revenue' => $revenue,
                 ];
-            })
-            ->sortByDesc('revenue');
+            });
 
-        // ========== BOOKING ANALYTICS ==========
-        
         // Booking Status Distribution
-        $bookingStatusDistribution = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-            $query->where('organizer_id', $organizer->id);
-        })
-        ->select('status', DB::raw('count(*) as total'))
-        ->groupBy('status')
-        ->get()
-        ->pluck('total', 'status');
+        $bookingStatusDistribution = Booking::select('bookings.status', DB::raw('count(*) as total'))
+            ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->groupBy('bookings.status')
+            ->get()
+            ->pluck('total', 'status');
 
-        // Average Booking Value
-        $avgBookingValue = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-            $query->where('organizer_id', $organizer->id);
-        })
-        ->where('status', 'approved')
-        ->avg('total_price');
+        // Key Metrics
+        $totalRevenue = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->where('bookings.status', 'approved')
+            ->sum('bookings.total_price') ?? 0;
 
-        // ========== KEY METRICS ==========
-        
+        $totalBookings = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+            ->join('events', 'tickets.event_id', '=', 'events.id')
+            ->where('events.organizer_id', $organizerId)
+            ->count();
+
+        $avgBookingValue = $totalBookings > 0 ? $totalRevenue / $totalBookings : 0;
+
+        $totalEvents = Event::where('organizer_id', $organizerId)->count();
+        $publishedEvents = Event::where('organizer_id', $organizerId)
+            ->where('status', 'published')
+            ->count();
+
         $keyMetrics = [
-            'total_revenue' => Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-                $query->where('organizer_id', $organizer->id);
-            })->where('status', 'approved')->sum('total_price'),
-            
-            'total_bookings' => Booking::whereHas('ticket.event', function ($query) use ($organizer) {
-                $query->where('organizer_id', $organizer->id);
-            })->count(),
-            
-            'total_events' => $organizer->events()->count(),
-            'published_events' => $organizer->events()->where('status', 'published')->count(),
+            'total_revenue' => $totalRevenue,
+            'total_bookings' => $totalBookings,
             'avg_booking_value' => $avgBookingValue,
+            'total_events' => $totalEvents,
+            'published_events' => $publishedEvents,
             'revenue_growth_rate' => round($revenueGrowthRate, 2),
         ];
 
+        // Re-enable strict mode
+        config(['database.connections.mysql.strict' => true]);
+
         return view('organizer.analytics.index', compact(
+            'period',
             'monthlyRevenueTrend',
-            'revenueGrowthRate',
+            'monthlyBookingsTrend',
             'eventPerformance',
             'bookingStatusDistribution',
             'keyMetrics'

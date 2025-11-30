@@ -38,6 +38,15 @@ class EventController extends Controller
 
         $events = $query->latest()->paginate(12);
 
+        // Tambahkan revenue calculation untuk setiap event
+        $events->getCollection()->transform(function ($event) {
+        $event->revenue = \App\Models\Booking::whereHas('ticket', function($query) use ($event) {
+            $query->where('event_id', $event->id);
+        })->where('status', 'approved')->sum('total_price');
+        
+        return $event;
+    });
+
         // Get categories for filter
         $categories = Category::all();
 

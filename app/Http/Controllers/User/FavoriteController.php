@@ -38,7 +38,10 @@ class FavoriteController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->with('info', 'Event is already in your favorites.');
+            if (request()->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Event sudah ada di favorit.']);
+            }
+            return back()->with('info', 'Event sudah ada di favorit.');
         }
 
         // Add to favorites
@@ -46,7 +49,11 @@ class FavoriteController extends Controller
             'event_id' => $event->id,
         ]);
 
-        return back()->with('success', 'Event added to favorites.');
+        if (request()->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Event ditambahkan ke favorit.']);
+        }
+
+        return back()->with('success', 'Event ditambahkan ke favorit.');
     }
 
     /**
@@ -62,11 +69,18 @@ class FavoriteController extends Controller
             ->first();
 
         if (!$favorite) {
-            return back()->with('error', 'Event not found in your favorites.');
+            if (request()->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Event tidak ditemukan di favorit.']);
+            }
+            return back()->with('error', 'Event tidak ditemukan di favorit.');
         }
 
         $favorite->delete();
 
-        return back()->with('success', 'Event removed from favorites.');
+        if (request()->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Event dihapus dari favorit.']);
+        }
+
+        return back()->with('success', 'Event dihapus dari favorit.');
     }
 }

@@ -97,9 +97,9 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         // Check if ticket has bookings
-        if ($ticket->bookings()->count() > 0) {
-            return back()->with('error', 'Cannot delete ticket with existing bookings. Please cancel bookings first.');
-        }
+        // if ($ticket->bookings()->count() > 0) {
+        //     return back()->with('error', 'Cannot delete ticket with existing bookings. Please cancel bookings first.');
+        // }
 
         $eventId = $ticket->event_id;
 

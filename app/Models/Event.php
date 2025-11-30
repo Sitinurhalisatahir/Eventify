@@ -66,10 +66,17 @@ class Event extends Model
     /**
      * Get the bookings for this event.
      */
-    public function bookings(): HasMany
-    {
-        return $this->hasMany(Booking::class);
-    }
+    public function bookings()
+{
+    return $this->hasManyThrough(
+        Booking::class,
+        Ticket::class,
+        'event_id', // Foreign key on tickets table
+        'ticket_id', // Foreign key on bookings table  
+        'id',        // Local key on events table
+        'id'         // Local key on tickets table
+    );
+}
 
     /**
      * Get the favorites for this event.

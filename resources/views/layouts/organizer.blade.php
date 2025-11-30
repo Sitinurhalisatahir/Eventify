@@ -42,9 +42,15 @@
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="flex items-center gap-2 text-gray-700 hover:text-gray-900">
-                                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white">
-                                    {{ substr(auth()->user()->name, 0, 1) }}
-                                </div>
+                                @if(auth()->user()->profile_image)
+                                    <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" 
+                                         alt="{{ auth()->user()->name }}" 
+                                         class="w-8 h-8 rounded-full object-cover">
+                                @else
+                                    <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white">
+                                        {{ substr(auth()->user()->name, 0, 1) }}
+                                    </div>
+                                @endif
                                 <span class="font-medium">{{ auth()->user()->name }}</span>
                                 <i class="fas fa-chevron-down text-sm"></i>
                             </button>
@@ -87,6 +93,9 @@
         </div>
     </div>
 
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
     @stack('scripts')
 </body>
 </html>

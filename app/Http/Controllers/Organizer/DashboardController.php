@@ -60,10 +60,21 @@ class DashboardController extends Controller
         
         // My Popular Events (by booking count)
         $popularEvents = $organizer->events()
-            ->withCount('bookings')
-            ->orderBy('bookings_count', 'desc')
-            ->take(5)
-            ->get();
+         ->with(['tickets.bookings']) // Load relationships
+         ->get()
+         ->map(function ($event) {
+            $event->bookings_count = $event->tickets->sum(function ($ticket) {
+                return $ticket->bookings->count();
+            });
+            return $event;
+        })
+        ->sortByDesc('bookings_count')
+        ->take(5);
+        // $popularEvents = $organizer->events()
+        //     ->withCount('bookings')
+        //     ->orderBy('bookings_count', 'desc')
+        //     ->take(5)
+        //     ->get();
         
         // Booking Status Distribution
         $bookingsByStatus = Booking::whereHas('ticket.event', function ($query) use ($organizer) {

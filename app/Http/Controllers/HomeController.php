@@ -18,17 +18,24 @@ class HomeController extends Controller
         $featuredEvents = Event::with(['category', 'organizer', 'tickets'])
             ->where('status', 'published')
             ->where('event_date', '>', now())
+            ->whereHas('tickets')
             ->inRandomOrder()
-            ->take(6)
-            ->get();
+            ->paginate(6);  // ✅ UBAH: get() -> paginate(6)
 
-        // Upcoming events (sorted by date)
+        // Upcoming events (sorted by date) - TAMBAH PAGINATION
         $upcomingEvents = Event::with(['category', 'organizer', 'tickets'])
             ->where('status', 'published')
             ->where('event_date', '>', now())
+            ->whereHas('tickets')
             ->orderBy('event_date', 'asc')
-            ->take(8)
-            ->get();
+            ->paginate(8);  // ✅ UBAH: get() -> paginate(8)
+        
+        // Past Events untuk lihat rating - TAMBAH PAGINATION
+        $pastEvents = Event::with(['category', 'organizer', 'tickets', 'reviews'])
+            ->where('status', 'published')
+            ->where('event_date', '<', now())
+            ->orderBy('event_date', 'desc')
+            ->paginate(6);  // ✅ UBAH: get() -> paginate(6)
 
         // All categories with event count
         $categories = Category::withCount(['events' => function ($query) {
@@ -38,6 +45,6 @@ class HomeController extends Controller
         ->having('events_count', '>', 0)
         ->get();
 
-        return view('home.index', compact('featuredEvents', 'upcomingEvents', 'categories'));
+        return view('home.index', compact('featuredEvents', 'upcomingEvents', 'pastEvents', 'categories'));
     }
 }
