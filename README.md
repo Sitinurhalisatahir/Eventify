@@ -1,15 +1,15 @@
-# 🎫 Eventify - E-Ticketing Platform
+### 🎫 Eventify - E-Ticketing Platform
 Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka yang intuitif.
 
-# ✨ Fitur Utama
-# 👥 Multi-Level User System
+### ✨ Fitur Utama
+### 👥 Multi-Level User System
 - Admin - Akses penuh manajemen sistem
 - Event Organizer - Kelola event dan tiket
 - Registered User - Booking tiket dan favorit event
 - Guest - Jelajahi event tanpa login
 ---
 
-## Struktur Project
+### Struktur Project
 ```plaintext
 e-ticketing-event/
 │
@@ -358,27 +358,6 @@ e-ticketing-event/
 └── webpack.mix.js
 ```
 ---
-
-### 🗄 Database Schema
-```plaintext
-users (id, name, email, role, organizer_status, profile_image)
-  │
-  ├─1:N─► events (id, organizer_id, category_id, name, event_date, ...)
-  │         │
-  │         ├─1:N─► tickets (id, event_id, name, price, quota, ...)
-  │         │         │
-  │         │         └─1:N─► bookings (id, user_id, ticket_id, booking_code, status)
-  │         │
-  │         ├─1:N─► favorites (id, user_id, event_id)
-  │         │
-  │         └─1:N─► reviews (id, user_id, event_id, booking_id, rating, comment)
-  │
-  └─1:N─► bookings, favorites, reviews
-
-categories (id, name, slug, icon, color)
-  │
-  └─1:N─► events
-  ```
 
 ### 🛠️ Installatsi & Setup
 1. Clone repository
