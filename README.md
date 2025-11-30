@@ -407,11 +407,14 @@ categories (id, name, slug, icon, color)
   │
   └─1:N─► events
   ```
+ ---
+
+ ```
   ### 🗄 Relasi Database 
   <img width="449" height="368" alt="image" src="https://github.com/user-attachments/assets/fac259bc-13ea-472f-8a2e-2ed712b5a24d" />
+```
 
-  ---
-
+----
   
 ### **👨‍💻 Akun Default**
 ``
@@ -429,7 +432,7 @@ categories (id, name, slug, icon, color)
 - Email: jane@example.com
 - Kata Sandi: password123
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
-```
+---
 
 ## 🏠 Halaman Beranda (Homepage)
 
@@ -446,7 +449,7 @@ categories (id, name, slug, icon, color)
 - Rating tertinggi dari user
 - Dilengkapi badge "POPULAR"
 
-### 🎉 Kategori
+### **🎉 Kategori**
 berbagai macam kategori:
 - Musik
 - Kuliner
