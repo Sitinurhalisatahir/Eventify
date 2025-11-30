@@ -1,4 +1,4 @@
-<img width="954" height="445" alt="image" src="https://github.com/user-attachments/assets/2b0c15d8-d096-4799-b587-af00ece9d23e" />### 🎫 Eventify - E-Ticketing Platform
+### 🎫 Eventify - E-Ticketing Platform
 Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka.
 
 ---
