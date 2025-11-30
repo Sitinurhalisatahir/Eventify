@@ -659,7 +659,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-# 🎪 Dashboard Organizer - Eventify
+### 🎪 Dashboard Organizer - Eventify
 
 <img width="942" height="449" alt="image" src="https://github.com/user-attachments/assets/28311199-3ebe-4628-ad68-8bdea240d8f7" />
 
@@ -693,4 +693,136 @@ Komponen halaman pendaftaran user baru:
 - Mencari acara atau pemesanan tertentu
 - Memfilter berdasarkan status
 - Mengelompokkan tampilan acara
+
+---
+
+# 🎪 Panel Organizer - Eventify
+
+## Halaman "Buat Acara Baru"
+
+<img width="1894" height="903" alt="image" src="https://github.com/user-attachments/assets/3332956d-2b8e-4224-8fc7-464ed8843c8e" />
+
+
+**Fungsi:** Formulir untuk membuat event baru
+- Input nama acara
+- Pilih kategori event
+- Atur tanggal dan waktu
+- Tentukan lokasi
+- Tambahkan deskripsi
+- Upload gambar poster (maks. 2MB)
+- Opsi simpan sebagai draft atau publish
+
+---
+
+## Halaman "Acara Saya"  
+
+<img width="1645" height="835" alt="image" src="https://github.com/user-attachments/assets/2fafa1de-42da-4b47-8067-36e9da8f7e94" />
+
+**Fungsi:** Mengelola semua event yang dibuat
+- Daftar semua acara dengan status
+- Filter berdasarkan kategori dan status
+- Info setiap acara: tanggal, lokasi, jumlah pemesanan
+- Tombol aksi untuk edit dan kelola tiket
+- Statistik pendapatan per event
+
+----
+
+
+## Halaman "Edit Acara"
+**Fungsi:** Mengubah detail event yang sudah dibuat
+- Edit informasi dasar (nama, kategori, jadwal)
+- Update lokasi dan deskripsi
+- Ubah status publikasi
+- Edit gambar poster
+- Kelola pengaturan tiket dan harga
+
+---
+
+<img width="951" height="442" alt="image" src="https://github.com/user-attachments/assets/7bb1804a-4c6a-4e3f-9cb6-df37d2f2ae07" />
+
+---
+
+# 🎪 Panel Organizer - Manajemen Pemesanan
+
+### Halaman "Pemesanan Acara Organizer"
+
+<img width="1909" height="1021" alt="image" src="https://github.com/user-attachments/assets/903e1191-fb4e-4f3a-bfa0-1a921baa3e3f" />
+
+
+**Fungsi:** Melihat dan mengelola semua pemesanan
+- Ringkasan status: Menunggu (0), Disetujui (3)
+- Filter berdasarkan acara
+- Daftar pemesanan dengan detail:
+  - Kode booking & nama pemesan
+  - Acara & jenis tiket
+  - Jumlah dan total harga
+  - Status persetujuan
+  - Tanggal pemesanan
+  - Tombol aksi "Lihat" detail
+ 
+---
+
+### Halaman "Detail Pemesanan"
+**Fungsi:** Melihat informasi lengkap satu pemesanan
+- **Informasi Pemesanan:**
+  - Kode booking, status, jumlah tiket
+  - Total harga & tanggal pemesanan
+
+- **Detail Acara:**
+  - Nama acara dan deskripsi
+  - Tanggal & lokasi event
+  - Jenis tiket dan harga
+  - Kapasitas tersedia (250/1000)
+
+- **Aksi Cepat:**
+  - Unduh tiket
+  - Hubungi pelanggan
+
+- **Timeline Pemesanan:**
+  - History status dari dibuat hingga disetujui
+  - Countdown menuju tanggal acara
+
+- **Profil Pelanggan:**
+  - Data lengkap pemesan
+  - Member sejak dan riwayat pemesanan
+  - Status kehadiran di acara
+
+## Fitur Utama:
+- Tracking status pemesanan real-time
+- Manajemen approval tiket
+- Data lengkap pelanggan
+- Timeline progress pemesanan
+- Aksi cepat untuk operasional
+
+---
+
+### 🎪 Panel Organizer - Eventify
+
+<img width="1912" height="883" alt="image" src="https://github.com/user-attachments/assets/4637ce9b-eaaf-4ee6-8b45-8890cbb5f845" />
+
+
+### Halaman Analitik
+- Lihat total pendapatan dan pemesanan
+- Track tren pendapatan bulanan (grafik)
+- Monitor tren pemesanan bulanan (grafik)
+- Filter data berdasarkan periode
+- Bandingkan performa antar acara
+- Lihat distribusi status pemesanan
+- Identifikasi acara paling laris
+- Analisis rata-rata nilai tiket
+
+
+---
+
+<img width="1894" height="913" alt="image" src="https://github.com/user-attachments/assets/8087a38a-8d29-4d24-aecc-59453cfb198e" />
+
+
+## Halaman Detail Analitik
+- Ranking performa tiap acara
+- Bandingkan jumlah pemesanan per event
+- Bandingkan pendapatan per event
+- Lihat persentase pemesanan sukses vs gagal
+- Analisis harga rata-rata per tiket
+- Evaluasi kinerja tiap acara
+
 
