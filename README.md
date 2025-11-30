@@ -498,13 +498,15 @@ berbagai macam kategori:
 
 ---
 
-🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
-  <img width="211" height="336" alt="image" src="https://github.com/user-attachments/assets/b42662bb-34bc-4ce7-a295-d46c16decaa4" />
-
-  ---
+🔎 **Search & filter** 
+<img width="211" height="336" alt="image" src="https://github.com/user-attachments/assets/b42662bb-34bc-4ce7-a295-d46c16decaa4" />
+  
+Cari event berdasarkan kategori, lokasi, tanggal
+  
+---
 
 🔐 **Login required** 
-  <img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
+<img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
 
 Harus login untuk booking & favorit
 
