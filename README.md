@@ -1,8 +1,8 @@
-## 🎫 Eventify - E-Ticketing Platform
+# 🎫 Eventify - E-Ticketing Platform
 Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka yang intuitif.
 ---
-## ✨ Fitur Utama
-## 👥 Multi-Level User System
+# ✨ Fitur Utama
+# 👥 Multi-Level User System
 - Admin - Akses penuh manajemen sistem
 - Event Organizer - Kelola event dan tiket
 - Registered User - Booking tiket dan favorit event
@@ -390,16 +390,17 @@ categories (id, name, slug, icon, color)
 
 ```bash
 1. Clone repository
-git clone https://github.com/username/eventify.git
+git clone https://github.com/Sitinurhalisatahir/eventify.git
 cd eventify
 
 # 2. Install dependencies
-composer install
+composer 
+require laravel/breeze --dev
 npm install && npm run build
 
 # 3. Environment setup
 cp .env.example .env
-php artisan key:generate
+DB_DATABASE=db_eventify
 
 # 4. Database configuration
 # Edit .env file dengan database credentials
