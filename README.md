@@ -380,13 +380,200 @@ e-ticketing-event/
    - DB_PASSWORD=
   
 5. Database configuration
-Edit .env file dengan database credentials
+   - Edit .env file dengan database credentials
+   - php artisan migrate --seed
+   - php artisan storage:link
+
+7. Serve application
+   - php artisan serve
+   - npm run dev
+
+```
+---
+## 🏗️ Struktur File & Fungsionalitas
+
+### 🔐 **AUTHENTICATION SYSTEM** (`app/Http/Controllers/Auth/`)
+- **AuthenticatedSessionController** - Login/logout session management
+- **RegisteredUserController** - Pendaftaran user baru dengan role selection
+- **PasswordResetLinkController** - Reset password via email
+- **NewPasswordController** - Set password baru setelah reset
+- **PasswordController** - Update password user
+
+### 🏠 **PUBLIC PAGES** (`app/Http/Controllers/`)
+- **HomeController** - Homepage dengan featured events, categories, upcoming events
+- **EventController** - Public event catalog & detail pages
+- **ProfileController** - Profile management untuk semua role
+
+### 👑 **ADMIN SYSTEM** (`app/Http/Controllers/Admin/`)
+- **DashboardController** - Admin dashboard overview
+- **UserController** - Kelola semua user (view, edit, delete)
+- **OrganizerApprovalController** - Approve/reject organizer applications
+- **CategoryController** - CRUD kategori event
+- **EventController** - Kelola semua event (view, edit, delete)
+- **TicketController** - Kelola tiket event
+- **BookingController** - Lihat & kelola semua pemesanan
+- **ReportController** - Laporan penjualan & analytics
+- **AnalyticsController** - Dashboard analytics dengan charts
+
+### 🎪 **ORGANIZER SYSTEM** (`app/Http/Controllers/Organizer/`)
+- **DashboardController** - Organizer dashboard dengan statistik
+- **EventController** - CRUD event milik organizer
+- **TicketController** - Kelola tiket untuk event
+- **BookingController** - Lihat & approve pemesanan untuk event organizer
+- **AnalyticsController** - Analytics khusus organizer (revenue, bookings)
+
+### 👤 **USER SYSTEM** (`app/Http/Controllers/User/`)
+- **DashboardController** - User dashboard dengan bookings & favorites
+- **BookingController** - Lihat & kelola pemesanan user
+- **FavoriteController** - Kelola daftar event favorit
+- **ReviewController** - Beri rating & review untuk event yang dihadiri
+
+### 🛡️ **MIDDLEWARE** (`app/Http/Middleware/`)
+- **AdminMiddleware** - Restrict akses hanya untuk admin
+- **OrganizerMiddleware** - Restrict akses hanya untuk organizer
+- **OrganizerApprovedMiddleware** - Restrict hanya organizer yang approved
+- **UserMiddleware** - Restrict akses hanya untuk regular user
+
+### 📝 **FORM VALIDATION** (`app/Http/Requests/`)
+- **ProfileUpdateRequest** - Validasi update profile
+- **StoreCategoryRequest** - Validasi buat kategori baru
+- **UpdateCategoryRequest** - Validasi update kategori
+- **StoreEventRequest** - Validasi buat event baru
+- **UpdateEventRequest** - Validasi update event
+- **StoreTicketRequest** - Validasi buat tiket baru
+- **StoreBookingRequest** - Validasi pemesanan tiket
+- **StoreReviewRequest** - Validasi submit review
+
+### 🗃️ **DATABASE MODELS** (`app/Models/`)
+- **User** - Model untuk semua users dengan role management
+- **Category** - Model untuk kategori event
+- **Event** - Model untuk event dengan status management
+- **Ticket** - Model untuk tiket event dengan quota management
+- **Booking** - Model untuk pemesanan dengan status tracking
+- **Favorite** - Model untuk event favorit user
+- **Review** - Model untuk rating & review event
+
+### 🎨 **FRONTEND COMPONENTS** (`resources/views/components/`)
+
+#### 🃏 **CARDS** (`components/cards/`)
+- **event-card.blade.php** - Card untuk menampilkan event
+- **ticket-card.blade.php** - Card untuk menampilkan tiket
+- **booking-card.blade.php** - Card untuk menampilkan booking
+- **stats-card.blade.php** - Card untuk statistik dashboard
+- **review-card.blade.php** - Card untuk menampilkan review
+
+#### ⚡ **UI COMPONENTS** (`components/ui/`)
+- **button.blade.php** - Reusable button components
+- **badge.blade.php** - Status badges & labels
+- **input.blade.php** - Form input fields
+- **textarea.blade.php** - Textarea components
+- **select.blade.php** - Dropdown select components
+- **alert.blade.php** - Alert/notification components
+- **modal.blade.php** - Modal dialog components
+- **breadcrumb.blade.php** - Navigation breadcrumbs
+- **checkbox-group.blade.php** - Checkbox group components
+- **file-upload.blade.php** - File upload components
+- **radio.blade.php** - Radio button components
+- **search-bar.blade.php** - Search input components
+
+#### 🧭 **LAYOUT COMPONENTS** (`components/layout/`)
+- **navbar.blade.php** - Main navigation bar
+- **footer.blade.php** - Site footer
+- **sidebar-admin.blade.php** - Admin dashboard sidebar
+- **sidebar-organizer.blade.php** - Organizer dashboard sidebar
+
+### 🎪 **PUBLIC PAGES** (`resources/views/`)
+
+#### 🏠 **HOMEPAGE** (`home/`)
+- **index.blade.php** - Main homepage layout
+- **partials/hero.blade.php** - Hero section dengan search
+- **partials/featured-events.blade.php** - Featured events section
+- **partials/categories.blade.php** - Event categories section
+- **partials/upcoming-events.blade.php** - Upcoming events section
+
+#### 📅 **EVENT PAGES** (`events/`)
+- **index.blade.php** - Event catalog dengan filter & search
+- **show.blade.php** - Event detail page dengan booking form
+- **partials/filter-sidebar.blade.php** - Filter sidebar untuk catalog
+- **partials/event-grid.blade.php** - Grid layout untuk events
+- **partials/ticket-list.blade.php** - List tiket untuk event
+- **partials/review-list.blade.php** - List reviews untuk event
+- **partials/event-hero.blade.php** - Hero section event detail
+- **partials/event-details.blade.php** - Event information section
+- **partials/organizer-info.blade.php** - Organizer information
+- **partials/similar-events.blade.php** - Related events recommendation
+- **partials/booking-sidebar.blade.php** - Booking form sidebar
+- **partials/review-form.blade.php** - Form untuk submit review
+
+### 👑 **ADMIN PANEL** (`resources/views/admin/`)
+- **dashboard.blade.php** - Admin dashboard dengan analytics
+- **users/index.blade.php** - Kelola semua users
+- **organizers/index.blade.php** - Approve/reject organizers
+- **categories/*** - CRUD kategori event
+- **events/*** - Kelola semua events
+- **bookings/*** - Lihat semua pemesanan
+- **reports/index.blade.php** - Sales reports & analytics
+- **analytics/index.blade.php** - Advanced analytics dashboard
+
+### 🎪 **ORGANIZER PANEL** (`resources/views/organizer/`)
+- **dashboard.blade.php** - Organizer dashboard
+- **events/*** - Kelola event milik organizer
+- **tickets/*** - Kelola tiket event
+- **bookings/*** - Kelola pemesanan untuk event organizer
+- **analytics/index.blade.php** - Analytics khusus organizer
+
+### 👤 **USER DASHBOARD** (`resources/views/user/`)
+- **dashboard.blade.php** - User personal dashboard
+- **bookings/*** - Kelola pemesanan user
+- **favorites/index.blade.php** - Daftar event favorit
+- **reviews/*** - Form untuk edit review
+
+---
+
+## 🚀 **FITUR UTAMA**
+
+### 👤 **Untuk User Reguler:**
+- 🔍 Browse & search events
+- ❤️ Add events to favorites
+- 🎫 Book tickets dengan berbagai tipe
+- ⭐ Beri rating & review untuk event yang dihadiri
+- 📱 Kelola pemesanan & lihat history
+
+### 🎪 **Untuk Organizer:**
+- ➕ Buat & kelola event
+- 🎫 Kelola tiket dengan berbagai harga & quota
+- ✅ Approve/reject pemesanan
+- 📊 Analytics pendapatan & performance
+- 👀 Preview event sebelum publish
+
+### 👑 **Untuk Admin:**
+- 👥 Kelola semua users & organizers
+- ✅ Approve/reject organizer applications
+- 🏷️ Kelola kategori event
+- 📊 Analytics sistem lengkap
+- 📈 Reports penjualan & growth
+- 🔧 Moderasi content
+
+## 🛠️ **TEKNOLOGI**
+- **Backend:** Laravel 10, PHP 8.1+
+- **Frontend:** Tailwind CSS, Alpine.js
+- **Database:** MySQL
+- **Authentication:** Laravel Breeze
+- **File Storage:** Local/Flysystem
+- **Icons:** Font Awesome
+
+## 📦 **INSTALASI**
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
 php artisan migrate --seed
 php artisan storage:link
+npm run build
 
-6. Serve application
-php artisan serve
-```
+---
+
 ### 🗄 Database Schema
 ```plaintext
 users (id, name, email, role, organizer_status, profile_image)
@@ -461,11 +648,12 @@ categories (id, name, slug, icon, color)
 berbagai macam kategori:
 - Musik
 - Kuliner
-- workshop
-- olahraga
+- Workshop
+- Olahraga
 - Teater
 - Seni
 - Seminar
+- Konser
 
 ---
 
@@ -935,3 +1123,174 @@ Komponen halaman pendaftaran user baru:
 - Sistem audit perubahan data
 
 ---
+
+## 📅 Management Acara - Panel Admin
+
+<img width="936" height="438" alt="image" src="https://github.com/user-attachments/assets/f1d5c0be-0ef0-44f4-b65c-6d95efa3863e" />
+
+
+## Dashboard Management
+- Mengelola semua acara dalam sistem
+- Memantau persetujuan organizer
+- Mengatur kategori acara
+- Melihat semua acara yang tersedia
+- Mengelola pemesanan tiket
+- Membuat laporan acara
+- Menganalisa performa acara
+
+## Fitur Pencarian & Filter
+- Mencari acara berdasarkan nama
+- Filter berdasarkan status acara
+- Filter berdasarkan kategori acara
+- Filter berdasarkan organizer
+- Melihat total acara (9 acara)
+
+## Manajemen Daftar Acara
+- Melihat semua acara yang terdaftar
+- Memantau detail acara (nama, deskripsi)
+- Melihat kategori dan jenis acara
+- Memantau tanggal dan waktu acara
+- Melihat jumlah tiket tersedia
+- Mengelola ketersediaan tiket
+- Akses edit dan hapus acara
+
+## Informasi Acara
+- Melihat organizer penyelenggara
+- Memantau lokasi acara
+- Melihat jumlah peserta terdaftar
+- Monitoring status ketersediaan tiket
+- Mengelola detail deskripsi acara
+
+---
+
+# 📋 Management Pemesanan - Panel Admin
+
+<img width="1891" height="880" alt="image" src="https://github.com/user-attachments/assets/5e3054a7-c85b-4a9c-ab2e-fecb6b8a4322" />
+
+
+## Dashboard Pemesanan
+- Mengelola semua pemesanan tiket dalam sistem
+- Melacak status pemesanan (Disetujui, Pending, Ditolak)
+- Memantau kode booking dan detail transaksi
+- Filter pemesanan berdasarkan status dan tanggal
+
+---
+
+<img width="1872" height="894" alt="image" src="https://github.com/user-attachments/assets/cbfc650f-c17d-474b-a00f-54da916400f3" />
+
+<img width="1888" height="883" alt="image" src="https://github.com/user-attachments/assets/d009a328-3ef0-449e-83b8-01c1d163ef1f" />
+
+## Detail Booking
+- Melihat informasi lengkap pesanan (#7FILWJJHWW)
+- Memantau status pemesanan (Disetujui)
+- Mengecek jumlah tiket dan total harga
+- Melihat tanggal booking yang dilakukan
+
+## Informasi Tiket
+- Melihat jenis tiket (Student Pass, General Admission, VIP)
+- Memantau harga per tiket dan ketersediaan
+- Mengecek deskripsi dan syarat tiket
+- Monitoring kuota tiket yang tersedia
+
+## Informasi Acara
+- Melihat detail acara yang dipesan
+- Memantau tanggal, waktu, dan lokasi acara
+- Mengecek organizer penyelenggara
+- Melihat deskripsi lengkap acara
+
+## Informasi Pelanggan
+- Melihat data lengkap pemesan (nama, email, telepon)
+- Memantau detail kontak pelanggan
+- Melakukan verifikasi data pemesan
+
+## Timeline & Status
+- Melacak timeline pemesanan (Booking Dibuat, Disetujui)
+- Memantau progress status booking
+- Melihat estimasi waktu hingga acara
+- Konfirmasi penerimaan tiket digital
+
+---
+
+## 📊 Laporan & Analitik - Panel Admin
+
+<img width="1893" height="880" alt="image" src="https://github.com/user-attachments/assets/50dece0b-95ba-4ce6-afa7-ca0ea37ad9fe" />
+
+<img width="1885" height="927" alt="image" src="https://github.com/user-attachments/assets/41766b0b-f8f7-4c8e-9fcb-b768b85cb2eb" />
+
+
+## Dashboard Laporan
+- Membuat laporan penjualan dan analitik
+- Menganalisa data pemesanan dan pendapatan
+- Melihat statistik performa acara
+- Filter laporan berdasarkan periode tanggal
+
+## Analitik Pendapatan
+- Melihat total pendapatan (Rp 550.000)
+- Memantau pendapatan berdasarkan status (Disetujui, Tertunda, Ditolak)
+- Menganalisa tren pendapatan harian/bulanan
+- Membandingkan target vs realisasi pendapatan
+
+## Statistik Pemesanan
+- Melihat total pemesanan (4 pesanan)
+- Memantau pemesanan berdasarkan status
+- Menganalisa tingkat konversi pemesanan
+- Melihat tren jumlah pemesanan over time
+
+## Performa Acara
+- Melihat acara terlaris berdasarkan pendapatan
+- Memantau performa tiap organizer
+- Menganalisa pendapatan per kategori acara
+- Melihat distribusi acara aktif (8 acara)
+
+## Filter & Export
+- Filter laporan berdasarkan tanggal mulai dan akhir
+- Reset filter untuk melihat data keseluruhan
+- Export data laporan untuk analisa lebih lanjut
+- Generate report dalam berbagai format
+
+---
+
+## 📈 Dashboard Analitik - Panel Admin
+
+<img width="1902" height="885" alt="image" src="https://github.com/user-attachments/assets/e854840c-e456-41a7-9785-e539a441e670" />
+
+<img width="1882" height="886" alt="image" src="https://github.com/user-attachments/assets/70ea369d-32c0-4ae6-a6c3-e1715fc36f71" />
+
+
+## Overview Performa
+- Melihat tren pendapatan bulanan dalam Rupiah
+- Memantau pertumbuhan pengguna baru
+- Menganalisa total pendapatan (Rp 1.650.000)
+- Melihat total pemesanan (9 pesanan)
+- Memantau total pengguna (7 users)
+- Mengecek persentase pertumbuhan pemesanan
+
+<img width="1897" height="901" alt="image" src="https://github.com/user-attachments/assets/23ce8dec-df33-42ac-bcd3-8627b615fd75" />
+
+## Performa Organizer/EO
+- Melihat ranking organizer berdasarkan pendapatan
+- Memantau total acara per organizer
+- Menganalisa kontribusi pendapatan tiap EO
+- Mengecek email dan kontak organizer
+
+## Acara Terbaik
+- Mengidentifikasi acara dengan kinerja terbaik
+- Melihat tingkat pemesanan dan konversi
+- Memantau rating rata-rata acara
+- Membandingkan performa antar acara
+
+
+
+<img width="1897" height="901" alt="image" src="https://github.com/user-attachments/assets/d637a747-fbe2-45b5-8493-5a604419988a" />
+
+
+## Kinerja Kategori
+- Menganalisa performa tiap kategori acara
+- Melihat total pemesanan per kategori
+- Memantau pendapatan per kategori
+- Mengecek jumlah acara aktif per kategori
+- Membandingkan kinerja kategori (Concert, Conference, Music, Workshop, Sports, Theater)
+
+
+
+
