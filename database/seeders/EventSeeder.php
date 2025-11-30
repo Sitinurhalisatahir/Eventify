@@ -175,26 +175,6 @@ class EventSeeder extends Seeder
             'image' => null,
         ]);
 
-        // Event 5 - Workshop (Upcoming)
-        $event5 = Event::create([
-            'organizer_id' => $organizer1->id,
-            'category_id' => Category::where('slug', 'workshop')->first()->id,
-            'name' => 'Web Development Bootcamp',
-            'description' => 'Intensive 2-day web development workshop covering Laravel and React. Perfect for beginners!',
-            'event_date' => now()->addWeeks(2)->setTime(9, 0),
-            'location' => 'UI Campus, Depok',
-            'image' => null,
-            'status' => 'published',
-        ]);
-
-        Ticket::create([
-            'event_id' => $event5->id,
-            'name' => 'Bootcamp Access',
-            'description' => 'Full 2-day bootcamp with materials and certificate',
-            'price' => 500000,
-            'quota' => 50,
-            'quota_remaining' => 50,
-            'image' => null,
-        ]);
+      
     }
 }

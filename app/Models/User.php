@@ -25,6 +25,7 @@ class User extends Authenticatable
         'organizer_status', // pending, approved, rejected
         'organizer_description',
         'phone',
+        'profile_image',
     ];
 
     /**
@@ -35,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
     ];
 
     /**
@@ -47,6 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'profile_image' => 'string'
         ];
     }
 

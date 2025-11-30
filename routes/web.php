@@ -6,7 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 
 // ========================================
-// PUBLIC ROUTES (Guest & User)
+// PUBLIC ROUTES (Guest & Authenticated User)
 // ========================================
 
 // Homepage
@@ -14,7 +14,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Event Catalog & Detail
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // ========================================
 // ADMIN ROUTES
@@ -33,11 +33,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/organizers/{user}/approve', [App\Http\Controllers\Admin\OrganizerApprovalController::class, 'approve'])->name('organizers.approve');
     Route::post('/organizers/{user}/reject', [App\Http\Controllers\Admin\OrganizerApprovalController::class, 'reject'])->name('organizers.reject');
     
-    // ✅ TAMBAH: Category Management
-    Route::resource('/categories', App\Http\Controllers\Admin\CategoryController::class);
+    // Category Management
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
     
     // Event Management (Admin bisa manage SEMUA event)
-    Route::resource('/events', App\Http\Controllers\Admin\EventController::class);
+    Route::resource('events', App\Http\Controllers\Admin\EventController::class);
     
     // Ticket Management
     Route::get('/events/{event}/tickets/create', [App\Http\Controllers\Admin\TicketController::class, 'create'])->name('events.tickets.create');
@@ -55,8 +55,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Reports
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     
-    // Analytics (OPTIONAL dari soal)
+    // Analytics (OPTIONAL)
     Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
+   
 });
 
 // ========================================
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'organizer.approved'])->prefix('organizer')->name('or
     Route::get('/dashboard', [App\Http\Controllers\Organizer\DashboardController::class, 'index'])->name('dashboard');
     
     // Event Management (Organizer hanya manage event sendiri)
-    Route::resource('/events', App\Http\Controllers\Organizer\EventController::class);
+    Route::resource('events', App\Http\Controllers\Organizer\EventController::class);
     
     // Ticket Management
     Route::get('/events/{event}/tickets/create', [App\Http\Controllers\Organizer\TicketController::class, 'create'])->name('events.tickets.create');
@@ -82,7 +83,7 @@ Route::middleware(['auth', 'organizer.approved'])->prefix('organizer')->name('or
     Route::post('/bookings/{booking}/approve', [App\Http\Controllers\Organizer\BookingController::class, 'approve'])->name('bookings.approve');
     Route::post('/bookings/{booking}/reject', [App\Http\Controllers\Organizer\BookingController::class, 'reject'])->name('bookings.reject');
     
-    // Analytics (OPTIONAL dari soal)
+    // Analytics (OPTIONAL)
     Route::get('/analytics', [App\Http\Controllers\Organizer\AnalyticsController::class, 'index'])->name('analytics.index');
 });
 
@@ -137,20 +138,38 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     Route::post('/favorites/{event}', [App\Http\Controllers\User\FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{event}', [App\Http\Controllers\User\FavoriteController::class, 'destroy'])->name('favorites.destroy');
     
-    // Reviews (OPTIONAL dari soal)
-    Route::post('/events/{event}/reviews', [App\Http\Controllers\User\ReviewController::class, 'store'])->name('reviews.store');
+    // Reviews (OPTIONAL)
+   // ⭐⭐ PASTIKAN ADA ROUTE INI ⭐⭐
+    Route::get('/events/{event}/reviews/create/{booking}', [App\Http\Controllers\User\ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/events/{event}/reviews/', [App\Http\Controllers\User\ReviewController::class, 'store'])->name('reviews.store');
     Route::get('/reviews/{review}/edit', [App\Http\Controllers\User\ReviewController::class, 'edit'])->name('reviews.edit');
     Route::patch('/reviews/{review}', [App\Http\Controllers\User\ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [App\Http\Controllers\User\ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
-
+ 
 // ========================================
 // PROFILE ROUTES (Semua role bisa akses)
 // ========================================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update'); 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/image', [ProfileController::class, 'deleteImage'])->name('profile.image.delete'); // ✅ BARU
+    
+});
+
+Route::get('/test-profile', function() {
+    return view('test-profile');
+});
+
+Route::post('/test-profile', function(Request $request) {
+    // Simpan file manual
+    if ($request->hasFile('profile_image')) {
+        $path = $request->file('profile_image')->store('test-uploads', 'public');
+        return "File berhasil diupload: " . $path;
+    }
+    return "Tidak ada file";
 });
 
 // ========================================

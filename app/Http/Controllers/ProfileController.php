@@ -31,41 +31,41 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $user = $request->user();
-        
-        // Fill validated data
-        $user->fill($request->validated());
+{
+    $user = $request->user();
+    
+    // Fill validated data
+    $user->fill($request->validated());
 
-        // If email changed, reset email_verified_at
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        // Handle profile image upload (jika ada)
-        if ($request->hasFile('profile_image')) {
-            // Delete old image if exists
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
-            }
-
-            // Store new image
-            $path = $request->file('profile_image')->store('profiles', 'public');
-            $user->profile_image = $path;
-        }
-
-        $user->save();
-
-        // Redirect based on role
-        $redirectRoute = match($user->role) {
-            'admin' => 'admin.dashboard',
-            'organizer' => 'organizer.dashboard',
-            default => 'user.dashboard',
-        };
-
-        return Redirect::route('profile.edit')
-            ->with('success', 'Profile updated successfully!');
+    // If email changed, reset email_verified_at
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
     }
+
+    // Handle profile image upload
+    if ($request->hasFile('profile_image')) {
+        // Delete old image if exists
+        if ($user->profile_image) {
+            Storage::disk('public')->delete($user->profile_image);
+        }
+
+        // Store new image - HANYA SATU KALI
+        $path = $request->file('profile_image')->store('profiles', 'public');
+        $user->profile_image = $path;
+    }
+
+    $user->save();
+
+    // Redirect based on role
+    $redirectRoute = match($user->role) {
+        'admin' => 'admin.dashboard',
+        'organizer' => 'organizer.dashboard',
+        default => 'user.dashboard',
+    };
+
+    return Redirect::route($redirectRoute)
+        ->with('success', 'Profile updated successfully!');
+}
 
     /**
      * Update the user's password.
@@ -122,6 +122,8 @@ class ProfileController extends Controller
         if ($user->profile_image) {
             Storage::disk('public')->delete($user->profile_image);
         }
+
+
 
         Auth::logout();
 

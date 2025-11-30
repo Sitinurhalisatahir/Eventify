@@ -41,7 +41,8 @@ class EventController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $events = $query->latest()->paginate(12);
+        // INI YANG DITAMBAH: withQueryString() supaya ?search=xxx&status=published&category=1 tetap stay saat ganti halaman
+        $events = $query->latest()->paginate(12)->withQueryString();
 
         // Get categories and organizers for filter
         $categories = Category::all();
@@ -153,24 +154,29 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        // Check if event has bookings
-        if ($event->bookings()->count() > 0) {
-            return back()->with('error', 'Cannot delete event with existing bookings. Please cancel bookings first.');
-        }
+        // ✅ ADMIN BISA HAPUS MESKI ADA BOOKING - FULL ACCESS
+        $eventName = $event->name;
+        $hasBookings = $event->bookings()->exists();
 
         // Delete image
         if ($event->image) {
             Storage::disk('public')->delete($event->image);
         }
 
-        // Delete tickets first (cascade)
+        // Delete related data (cascade)
         $event->tickets()->delete();
+        $event->bookings()->delete(); // ✅ HAPUS JUGA BOOKINGNYA
+        $event->favorites()->delete(); // Hapus dari favorites
+        $event->reviews()->delete();   // Hapus reviews
 
-        $eventName = $event->name;
         $event->delete();
+
+        $message = $hasBookings 
+            ? "Event '{$eventName}' and all associated bookings have been deleted successfully."
+            : "Event '{$eventName}' has been deleted successfully.";
 
         return redirect()
             ->route('admin.events.index')
-            ->with('success', "Event '{$eventName}' has been deleted successfully.");
+            ->with('success', $message);
     }
 }

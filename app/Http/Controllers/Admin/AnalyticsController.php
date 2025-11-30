@@ -1,5 +1,5 @@
 <?php
-// app/Http/Controllers/Admin/AnalyticsController.php
+// app/Http\Controllers/Admin\AnalyticsController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -18,6 +18,10 @@ class AnalyticsController extends Controller
      */
     public function index(Request $request)
     {
+        // ✅ DISABLE STRICT MODE DI AWAL - Prevent GROUP BY issues
+        config(['database.connections.mysql.strict' => false]);
+        \DB::reconnect();
+
         // Time period filter (default: last 12 months)
         $period = $request->get('period', '12months');
 
@@ -57,6 +61,31 @@ class AnalyticsController extends Controller
             ? (($currentMonthRevenue - $previousMonthRevenue) / $previousMonthRevenue) * 100 
             : 0;
 
+        // ========== ORGANIZER/EO REVENUE ANALYTICS ==========
+        
+        // Top Organizers by Revenue
+        $organizerRevenue = User::where('role', 'organizer')
+            ->where('organizer_status', 'approved')
+            ->withCount(['events as events_count' => function($query) {
+                $query->where('status', 'published');
+            }])
+            ->addSelect([
+                'total_revenue' => Booking::select(DB::raw('COALESCE(SUM(total_price), 0)'))
+                    ->where('status', 'approved')
+                    ->whereIn('ticket_id', function($query) {
+                        $query->select('id')
+                            ->from('tickets')
+                            ->whereIn('event_id', function($q) {
+                                $q->select('id')
+                                    ->from('events')
+                                    ->whereColumn('organizer_id', 'users.id');
+                            });
+                    })
+            ])
+            ->having('total_revenue', '>', 0)
+            ->orderBy('total_revenue', 'desc')
+            ->get();
+
         // ========== USER ANALYTICS ==========
         
         // User Growth Trend (last 12 months)
@@ -80,35 +109,45 @@ class AnalyticsController extends Controller
 
         // ========== EVENT ANALYTICS ==========
         
-        // Event Performance (average rating, booking rate)
-        $eventPerformance = Event::select('events.*')
-            ->withCount('bookings')
-            ->withAvg('reviews', 'rating')
+        // ✅ FIX: Event Performance - Ambil SEMUA event dari SEMUA organizer
+        $eventPerformance = Event::with(['organizer', 'tickets', 'reviews'])
             ->where('status', 'published')
-            ->orderBy('bookings_count', 'desc')
-            ->take(10)
             ->get()
             ->map(function ($event) {
-                // Calculate total tickets
-                $totalTickets = $event->tickets()->sum('quota');
-                $soldTickets = $totalTickets - $event->tickets()->sum('quota_remaining');
+                // Hitung total bookings untuk event ini
+                $bookingsCount = Booking::whereHas('ticket', function ($query) use ($event) {
+                    $query->where('event_id', $event->id);
+                })->count();
+
+                // Hitung total tickets dan sold tickets
+                $totalTickets = $event->tickets->sum('quota');
+                $soldTickets = $totalTickets - $event->tickets->sum('quota_remaining');
                 
+                // Hitung average rating
+                $avgRating = $event->reviews->avg('rating') ?? 0;
+
                 return [
                     'event' => $event,
+                    'bookings_count' => $bookingsCount,
                     'booking_rate' => $totalTickets > 0 ? ($soldTickets / $totalTickets) * 100 : 0,
-                    'avg_rating' => round($event->reviews_avg_rating ?? 0, 1),
+                    'avg_rating' => round($avgRating, 1),
                 ];
-            });
+            })
+            ->sortByDesc('bookings_count')
+            ->take(10);
 
         // ========== CATEGORY ANALYTICS ==========
         
-        // Category Performance
+        // ✅ FIX: Category Performance - whereHas sudah aman
         $categoryPerformance = Category::select('categories.*')
             ->withCount(['events' => function ($query) {
                 $query->where('status', 'published');
             }])
             ->with(['events' => function ($query) {
-                $query->withCount('bookings');
+                $query->addSelect(['bookings_count' => Booking::select(DB::raw('count(*)'))
+                    ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+                    ->whereColumn('tickets.event_id', 'events.id')
+                ]);
             }])
             ->having('events_count', '>', 0)
             ->get()
@@ -150,6 +189,9 @@ class AnalyticsController extends Controller
             'revenue_growth_rate' => round($revenueGrowthRate, 2),
         ];
 
+        // ✅ RE-ENABLE STRICT MODE
+        config(['database.connections.mysql.strict' => true]);
+
         return view('admin.analytics.index', compact(
             'period',
             'monthlyRevenueTrend',
@@ -158,7 +200,8 @@ class AnalyticsController extends Controller
             'eventPerformance',
             'categoryPerformance',
             'bookingStatusDistribution',
-            'keyMetrics'
+            'keyMetrics',
+            'organizerRevenue' // ✅ TAMBAHKAN INI
         ));
     }
 }
