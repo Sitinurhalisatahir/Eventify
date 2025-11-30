@@ -866,9 +866,6 @@ Komponen halaman pendaftaran user baru:
 
 <img width="1900" height="897" alt="image" src="https://github.com/user-attachments/assets/a8871c4c-d1d7-4144-96d3-61223158091f" />
 
-<img width="1911" height="918" alt="image" src="https://github.com/user-attachments/assets/539d73f8-a30b-42d2-b280-efdc86ac5e47" />
-
-
 ## Dashboard Management
 - Mengelola data pengguna sistem
 - Memverifikasi dan menyetujui organizer
@@ -892,6 +889,8 @@ Komponen halaman pendaftaran user baru:
 - Mengelola akses dan peran pengguna
 - Filter dan hapus data pengguna
 
+<img width="1911" height="918" alt="image" src="https://github.com/user-attachments/assets/539d73f8-a30b-42d2-b280-efdc86ac5e47" />
+
 ## Detail Informasi Pengguna
 - Melihat profil lengkap pengguna
 - Memantau informasi kontak (email, telepon)
@@ -901,5 +900,38 @@ Komponen halaman pendaftaran user baru:
 - Melacak favorit dan preferensi user
 
 ---
+## 🏷️ Management Kategori - Panel Admin
+
+<img width="1908" height="910" alt="image" src="https://github.com/user-attachments/assets/01cccb2e-0c37-4564-9d2c-34ba2157a5e5" />
 
 
+## Manajemen Kategori
+- Mengelola kategori acara dan propertinya
+- Menambah kategori acara baru
+- Mengedit detail kategori yang sudah ada
+- Menghapus kategori yang tidak diperlukan
+
+<img width="1866" height="901" alt="image" src="https://github.com/user-attachments/assets/7208efcb-de90-45aa-8295-35fe1faacb17" />
+
+
+## Form Tambah/Edit Kategori
+- Menginput nama kategori (contoh: Music Concert)
+- Menambahkan icon class (contoh: fas fa-music)
+- Menulis deskripsi untuk kategori
+- Mengatur slug/URL yang user-friendly
+- Memilih warna tema kategori dengan kode hex
+
+## Daftar Kategori
+- Melihat semua kategori yang tersedia
+- Memantau ikon dan warna setiap kategori
+- Melihat jumlah acara per kategori
+- Membaca deskripsi setiap kategori
+- Mengakses aksi edit dan hapus untuk setiap kategori
+
+## Fitur Kategori
+- Filter dan organisasi kategori
+- Monitoring penggunaan kategori
+- Pengelolaan properti visual (ikon, warna)
+- Sistem audit perubahan data
+
+---
