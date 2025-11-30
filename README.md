@@ -361,6 +361,8 @@ e-ticketing-event/
 ├── vite.config.js
 └── webpack.mix.js
 ```
+---
+
 ### 🗄 Database Schema
 ```plaintext
 users (id, name, email, role, organizer_status, profile_image)
