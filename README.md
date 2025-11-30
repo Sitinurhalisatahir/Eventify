@@ -1,4 +1,4 @@
-### 🎫 Eventify - E-Ticketing Platform
+<img width="954" height="445" alt="image" src="https://github.com/user-attachments/assets/2b0c15d8-d096-4799-b587-af00ece9d23e" />### 🎫 Eventify - E-Ticketing Platform
 Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka.
 
 ---
@@ -546,7 +546,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-### 🎯 Dashboard Pengguna - Eventify
+## 🎯 Dashboard Pengguna - Eventify
 
 **Dashboard Utama 🏠**
 
@@ -659,7 +659,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-### 🎪 Dashboard Organizer - Eventify
+## 🎪 Dashboard Organizer - Eventify
 
 <img width="942" height="449" alt="image" src="https://github.com/user-attachments/assets/28311199-3ebe-4628-ad68-8bdea240d8f7" />
 
@@ -696,7 +696,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-# 🎪 Panel Organizer - Eventify
+### 🎪 Panel Kelola Acara Organizer - Eventify
 
 ## Halaman "Buat Acara Baru"
 
@@ -742,7 +742,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-# 🎪 Panel Organizer - Manajemen Pemesanan
+## 🎪 Panel Organizer - Manajemen Pemesanan
 
 ### Halaman "Pemesanan Acara Organizer"
 
@@ -796,7 +796,7 @@ Komponen halaman pendaftaran user baru:
 
 ---
 
-### 🎪 Panel Organizer - Eventify
+## 🎪 Panel Organizer Analitik - Eventify
 
 <img width="1912" height="883" alt="image" src="https://github.com/user-attachments/assets/4637ce9b-eaaf-4ee6-8b45-8890cbb5f845" />
 
@@ -826,3 +826,37 @@ Komponen halaman pendaftaran user baru:
 - Evaluasi kinerja tiap acara
 
 
+---
+
+## Admin Dashboard
+
+<img width="954" height="445" alt="image" src="https://github.com/user-attachments/assets/809af492-287e-4970-b4e3-60183af2b56b" />
+
+## 🎪 Panel Admin - Management Acara
+
+## Dashboard Management
+- Mengelola program acara
+- Memverifikasi dan menyetujui organizer
+- Mengelola kategori acara
+- Memantau semua acara
+- Mengelola pemesanan tiket
+- Membuat laporan sistem
+
+## Analitik & Monitoring
+- Memantau total program (7 program)
+- Melacak organizer disetujui (2 organizer)
+- Melihat ringkasan pendapatan
+- Memonitor total pendapatan Rp 1.650.000
+- Melacak status pemesanan (Disetujui, Dokumen, Ditolak)
+
+## Manajemen Acara
+- Melihat acara popular berdasarkan pemesanan
+- Memantau performa tiap event
+- Melihat detail pemesanan per acara
+
+## Sistem Admin
+- Menerima notifikasi pengingat
+- Mengatur tema tampilan (dark/light)
+- Mengelola preferensi warna
+- Melihat pemesanan terbaru
+- Memfilter acara berdasarkan kategori
