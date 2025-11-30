@@ -382,23 +382,28 @@ categories (id, name, slug, icon, color)
 
 ### 🛠️ Installatsi & Setup
 1. Clone repository
-git clone https://github.com/Sitinurhalisatahir/eventify.git
-cd eventify
+   git clone https://github.com/Sitinurhalisatahir/eventify.git
+   cd eventify
 
-2. Install dependencies
-composer 
-require laravel/breeze --dev
-npm install && npm run build
+3. Install dependencies
+   - composer create-project laravel/laravel eventify,
+   - require laravel/breeze --dev
+   - npm install && npm run build
 
-3. Environment setup
-cp .env.example .env
-DB_DATABASE=db_eventify
-
-4. Database configuration
+4. Environment setup
+   cp .env.example .env
+   - DB_CONNECTION=mysql
+   - DB_HOST=127.0.0.1
+   - DB_PORT=3306
+   - DB_DATABASE=db_eventify
+   - DB_USERNAME=root
+   - DB_PASSWORD=
+  
+5. Database configuration
 Edit .env file dengan database credentials
 php artisan migrate --seed
 php artisan storage:link
 
-5. Serve application
+6. Serve application
 php artisan serve
 ```
