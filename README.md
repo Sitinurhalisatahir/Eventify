@@ -422,7 +422,7 @@ categories (id, name, slug, icon, color)
 
 **Akun Organizer** 
 - Email: organizer1@eventify.com
-- Kata Sandi: password 123
+- Kata Sandi: password123
 - Fitur: Manajemen akun event dan tiket sendiri dan Menyetujui Pesanan
 
 **Akun User**
@@ -430,3 +430,88 @@ categories (id, name, slug, icon, color)
 - Kata Sandi: password123
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
 ```
+
+## 🏠 Halaman Beranda (Homepage)
+
+### **Beranda**
+<img width="941" height="317" alt="image" src="https://github.com/user-attachments/assets/fad2140a-110b-4797-bee4-bb7d83e3d53e" />
+- 🎯 **Tempat Pencarian Acara** - Search bar dengan autocomplete
+- 🔍 **Jelajahi Acara** - Button untuk langsung ke katalog event
+- 📝 **Daftar Akun** - CTA untuk register (jika belum login)
+- 🎨 **Design menarik** - Banner dengan event highlights
+
+#### **🎪 Acara Populer**
+<img width="467" height="392" alt="image" src="https://github.com/user-attachments/assets/8c83fdd8-f16b-4b46-a998-4f4e89c4a2bd" />
+- Menampilkan event dengan booking terbanyak
+- Rating tertinggi dari user
+- Dilengkapi badge "POPULAR"
+
+### 🎉 Kategori
+berbagai macam kategori:
+- Musik
+- Kuliner
+- workshop
+- olahraga
+- Teater
+- Seni
+- Seminae
+
+#### **📅 Acara Mendatang**
+- Event yang akan datang dalam 30 hari
+- Sort by tanggal terdekat
+- Countdown timer ke event
+
+#### **⏳ Acara Telah Berlangsung**
+- Archive event yang sudah selesai
+- Bisa lihat review & rating
+- Historical data untuk reference
+
+### Guest (Pengunjung)
+- 🔍 **Jelajahi event** - Browse semua event yang tersedia
+<img width="926" height="361" alt="image" src="https://github.com/user-attachments/assets/eb6dc7a3-67dd-4a85-a475-efddab0c7436" />
+
+- 📱 **View details** - Lihat detail event lengkap
+
+
+- 🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
+- 🔐 **Login required** - Harus login untuk booking & favorit
+
+#### Registered User
+- 🎟️ **Booking tiket** - Pesan tiket dengan kode booking unik
+- ❤️ **Favorite system** - Simpan event favorit
+- ⭐ **Review & rating** - Beri ulasan untuk event yang diikuti
+- 📋 **Riwayat pemesanan** - Lihat semua booking & statusnya
+- 👤 **Profile management** - Kelola akun pribadi
+
+#### **Admin** 
+- 🎯 **Kontrol penuh sistem** - Kelola semua aspek platform
+- 👥 **Manajemen pengguna** - Approve/reject organizer, kelola roles
+- 📊 **Analytics & laporan** - View penjualan tiket, statistik event
+- 🎫 **Supervisor event** - Bisa edit/hapus event dari organizer mana pun
+- 📈 **Dashboard lengkap** - Overview seluruh sistem
+
+#### **Event Organizer**
+- 🎪 **Manajemen event** - Buat, edit, hapus event sendiri
+- 🎫 **Kelola tiket** - Multiple ticket types dengan harga & kuota berbeda
+- 👀 **View bookings** - Lihat pemesanan untuk event mereka
+- 📱 **Dashboard organizer** - Ringkasan performa event
+- ⏳ **Pending approval** - Sistem approval dari admin sebelum aktif
+
+
+#### **Guest (Pengunjung)**
+- 🔍 **Jelajahi event** - Browse semua event yang tersedia
+- 📱 **View details** - Lihat detail event lengkap
+- 🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
+- 🔐 **Login required** - Harus login untuk booking & favorit
+
+### 🎫 Fitur Inti Platform
+- ✅ **Katalog Event** - Pencarian & filter event lengkap
+- ✅ **Multi-type Ticket System** - Berbagai jenis tiket dalam satu event
+- ✅ **Sistem Booking** - Kode booking unik untuk setiap pemesanan
+- ✅ **Favorite Events** - Simpan event favorit untuk nanti
+- ✅ **Review & Rating** - Ulasan dan rating untuk event yang diikuti
+- ✅ **Responsive Design** - Optimal di semua device (mobile-first)
+- ✅ **Real-time Quota** - Pengurangan kuota tiket real-time
+- ✅ **Digital Tickets** - Tiket digital setelah booking approved
+- ✅ **Event Management** - CRUD event dan tiket yang mudah
+- ✅ **User Management** - Approval system untuk organizer
