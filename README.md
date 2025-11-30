@@ -501,7 +501,8 @@ berbagai macam kategori:
 ---
 
 🔎 **Search & filter** 
-<img width="211" height="336" alt="image" src="https://github.com/user-attachments/assets/b42662bb-34bc-4ce7-a295-d46c16decaa4" />
+<img width="190" height="396" alt="image" src="https://github.com/user-attachments/assets/e2d70344-e6b0-48b3-a1ed-379632831a4e"/>
+
   
 - Cari event berdasarkan kategori, lokasi, tanggal
   
