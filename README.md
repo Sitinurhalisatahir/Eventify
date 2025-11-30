@@ -1,6 +1,6 @@
 ### 🎫 Eventify - E-Ticketing Platform
-Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka yang intuitif.
-
+Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan tiket, dan mengelola acara dengan antarmuka.
+---
 ### ✨ Fitur Utama
 ### 👥 Multi-Level User System
 - Admin - Akses penuh manajemen sistem
