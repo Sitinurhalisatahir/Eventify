@@ -430,3 +430,4 @@ categories (id, name, slug, icon, color)
 - Email: user@eventify.com
 - Password: password
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
+```
