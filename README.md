@@ -409,3 +409,24 @@ categories (id, name, slug, icon, color)
   ```
   ### 🗄 Relasi Database 
   <img width="449" height="368" alt="image" src="https://github.com/user-attachments/assets/fac259bc-13ea-472f-8a2e-2ed712b5a24d" />
+
+  ---
+
+  
+### **👨‍💻 Akun Default**
+```markdown
+
+**Akun Admin**
+- Email: admin@eventify.com
+- Kata Sandi: password
+- Fitur: Mengatur semua manajemen tiket dan acara, Dapat menyetujui Organizer, Pending, dan Batalkan
+
+**Akun Organizer** 
+- Email: organizer@eventify.com
+- Kata Sandi: password  
+- Fitur: Manajemen akun event dan tiket sendiri dan Menyetujui Pesanan
+
+**Akun User**
+- Email: user@eventify.com
+- Password: password
+- Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
