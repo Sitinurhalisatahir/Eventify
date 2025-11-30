@@ -383,3 +383,28 @@ categories (id, name, slug, icon, color)
   │
   └─1:N─► events
   ```
+
+### **7. 🛠️ Installation & Setup**
+```markdown
+## 🛠️ Installation
+
+```bash
+# 1. Clone repository
+git clone https://github.com/username/eventify.git
+cd eventify
+
+# 2. Install dependencies
+composer install
+npm install && npm run build
+
+# 3. Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# 4. Database configuration
+# Edit .env file dengan database credentials
+php artisan migrate --seed
+php artisan storage:link
+
+# 5. Serve application
+php artisan serve
