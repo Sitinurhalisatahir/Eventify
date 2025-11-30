@@ -438,10 +438,13 @@ categories (id, name, slug, icon, color)
 
 ### **Beranda**
 <img width="941" height="317" alt="image" src="https://github.com/user-attachments/assets/fad2140a-110b-4797-bee4-bb7d83e3d53e" />
+
 - 🎯 **Tempat Pencarian Acara** - Search bar dengan autocomplete
 - 🔍 **Jelajahi Acara** - Button untuk langsung ke katalog event
 - 📝 **Daftar Akun** - CTA untuk register (jika belum login)
 - 🎨 **Design menarik** - Banner dengan event highlights
+
+---
 
 #### **🎪 Acara Populer**
 <img width="467" height="392" alt="image" src="https://github.com/user-attachments/assets/8c83fdd8-f16b-4b46-a998-4f4e89c4a2bd" />
@@ -449,6 +452,8 @@ categories (id, name, slug, icon, color)
 - Menampilkan event dengan booking terbanyak
 - Rating tertinggi dari user
 - Dilengkapi badge "POPULAR"
+
+---
 
 ### **🎉 Kategori**
 <img width="929" height="424" alt="image" src="https://github.com/user-attachments/assets/eb2e7098-fc9f-40d1-a38a-fb56d6b99cd0" />
@@ -462,6 +467,8 @@ berbagai macam kategori:
 - Seni
 - Seminar
 
+---
+
 #### **📅 Acara Mendatang**
 <img width="939" height="414" alt="image" src="https://github.com/user-attachments/assets/c9504d81-55c3-4730-9678-56c050c9a027" />
 
@@ -469,25 +476,34 @@ berbagai macam kategori:
 - Sort by tanggal terdekat
 - Countdown timer ke event
 
+---
+
 #### **⏳ Acara Telah Berlangsung**
 <img width="955" height="439" alt="image" src="https://github.com/user-attachments/assets/f09149cb-5c7d-41d8-88f0-facd2f489e86" />
 
 - Archive event yang sudah selesai
 - Bisa lihat review & rating
 
+--- 
 
 ### Guest (Pengunjung)
-- 🔍 **Jelajahi event** - Browse semua event yang tersedia
+🔍 **Jelajahi event** - Browse semua event yang tersedia
 <img width="926" height="361" alt="image" src="https://github.com/user-attachments/assets/eb6dc7a3-67dd-4a85-a475-efddab0c7436" />
 
-- 📱 **View details** - Lihat detail event lengkap
+---
+
+📱 **View details** - Lihat detail event lengkap
 <img width="956" height="449" alt="image" src="https://github.com/user-attachments/assets/966aaca0-9f5d-47b5-a5d1-8be7d83db0e8" />
 <img width="430" height="398" alt="image" src="https://github.com/user-attachments/assets/f2db4050-681b-4196-8448-210523864309" />
 
-- 🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
+---
+
+🔎 **Search & filter** - Cari event berdasarkan kategori, lokasi, tanggal
   <img width="211" height="336" alt="image" src="https://github.com/user-attachments/assets/b42662bb-34bc-4ce7-a295-d46c16decaa4" />
 
-- 🔐 **Login required** - Harus login untuk booking & favorit
+  ---
+
+🔐 **Login required** - Harus login untuk booking & favorit
   <img width="491" height="420" alt="image" src="https://github.com/user-attachments/assets/8c3c8fce-bb43-4ab7-a835-47fa8de3d0be" />
 
 #### Registered User
