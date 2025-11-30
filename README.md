@@ -385,11 +385,7 @@ categories (id, name, slug, icon, color)
   ```
 
 ### **7. 🛠️ Installatsi & Setup**
-```markdown
-## 🛠️ Installation
-
-```bash
-1. Clone repository
+# 1. Clone repository
 git clone https://github.com/Sitinurhalisatahir/eventify.git
 cd eventify
 
