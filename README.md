@@ -387,3 +387,25 @@ php artisan storage:link
 6. Serve application
 php artisan serve
 ```
+### 🗄 Database Schema
+```plaintext
+users (id, name, email, role, organizer_status, profile_image)
+  │
+  ├─1:N─► events (id, organizer_id, category_id, name, event_date, ...)
+  │         │
+  │         ├─1:N─► tickets (id, event_id, name, price, quota, ...)
+  │         │         │
+  │         │         └─1:N─► bookings (id, user_id, ticket_id, booking_code, status)
+  │         │
+  │         ├─1:N─► favorites (id, user_id, event_id)
+  │         │
+  │         └─1:N─► reviews (id, user_id, event_id, booking_id, rating, comment)
+  │
+  └─1:N─► bookings, favorites, reviews
+
+categories (id, name, slug, icon, color)
+  │
+  └─1:N─► events
+  ```
+  ### 🗄 Relasi Database 
+  <img width="449" height="368" alt="image" src="https://github.com/user-attachments/assets/fac259bc-13ea-472f-8a2e-2ed712b5a24d" />
