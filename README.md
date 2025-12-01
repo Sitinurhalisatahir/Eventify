@@ -390,6 +390,7 @@ e-ticketing-event/
 
 ```
 ---
+
 ```
 ## 🏗️ Struktur File & Fungsionalitas
 
@@ -575,6 +576,7 @@ php artisan key:generate
 php artisan migrate --seed
 php artisan storage:link
 npm run build
+```
 
 ---
 
@@ -623,6 +625,7 @@ categories (id, name, slug, icon, color)
 - Email: jane@example.com
 - Kata Sandi: password123
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
+
 ---
 
 ## 🏠 Halaman Beranda (Homepage)
