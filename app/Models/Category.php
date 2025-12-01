@@ -1,5 +1,4 @@
 <?php
-// app/Models/Category.php
 
 namespace App\Models;
 
@@ -24,29 +23,17 @@ class Category extends Model
         'description',
     ];
 
-    // ==================== RELATIONSHIPS ====================
-
-    /**
-     * Get the events for this category.
-     */
-    public function events(): HasMany
+       public function events(): HasMany
     {
         return $this->hasMany(Event::class);
     }
 
-    // ==================== HELPER METHODS ====================
-
-    /**
-     * Get the route key for the model.
-     */
+   
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    /**
-     * Get events count for this category.
-     */
     public function getEventsCountAttribute(): int
     {
         return $this->events()->count();

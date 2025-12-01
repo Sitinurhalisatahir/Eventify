@@ -38,7 +38,6 @@ class RegisteredUserController extends Controller
             // 'organizer_description' => ['required_if:role,organizer', 'nullable', 'string', 'max:1000'],
         ]);
 
-        // ✅ FIX: Tentukan organizer_status
         $organizerStatus = $request->role === 'organizer' ? 'pending' : null;
 
         $user = User::create([
@@ -46,7 +45,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user',
-            'organizer_status' => null, // ✅ FIX: Variable sudah didefinisikan
+            'organizer_status' => null, 
             'organizer_description' => null,
             'phone' => $request->phone,
         ]);
@@ -55,12 +54,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // // ✅ Redirect berdasarkan role setelah register
-        // if ($user->role === 'organizer') {
-        //     return redirect()->route('organizer.pending')->with('success', 'Your organizer account has been created. Please wait for admin approval.');
-        // }
-
-        // User biasa langsung ke dashboard
         return redirect()->route('user.dashboard')->with('success', 'Account created successfully!');
     }
 }

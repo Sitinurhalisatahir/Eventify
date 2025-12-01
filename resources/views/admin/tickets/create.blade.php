@@ -1,4 +1,3 @@
-{{-- resources/views/admin/tickets/create.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Buat Tiket Baru')

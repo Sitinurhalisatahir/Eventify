@@ -16,11 +16,9 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil organizer yang approved
         $organizer1 = User::where('email', 'organizer1@eventify.com')->first();
         $organizer2 = User::where('email', 'organizer2@eventify.com')->first();
 
-        // Ambil categories
         $musicCategory = Category::where('slug', 'music')->first();
         $sportsCategory = Category::where('slug', 'sports')->first();
         $conferenceCategory = Category::where('slug', 'conference')->first();
@@ -34,7 +32,7 @@ class EventSeeder extends Seeder
             'description' => 'The biggest rock music festival in Indonesia featuring international and local bands. Join us for an unforgettable night of music!',
             'event_date' => now()->addMonths(2)->setTime(18, 0),
             'location' => 'Gelora Bung Karno Stadium, Jakarta',
-            'image' => null, // bisa diisi path nanti
+            'image' => null, 
             'status' => 'published',
         ]);
 

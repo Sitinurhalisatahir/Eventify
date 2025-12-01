@@ -1,4 +1,3 @@
-{{-- resources/views/admin/bookings/show.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Detail Booking')
@@ -29,8 +28,8 @@
     <!-- Header dengan Actions -->
     <div class="flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Booking #{{ $booking->booking_code }}</h1>
-            <p class="text-gray-600 mt-2">Detail lengkap booking dan manajemen</p>
+            <h1 class="text-3xl font-bold text-gray-900">Booking#{{ $booking->booking_code }}</h1>
+            <p class="text-gray-600 mt-2">Detail lengkap pesanan dan manajemen</p>
         </div>
         <div class="flex items-center space-x-3">
             @if($booking->isPending())

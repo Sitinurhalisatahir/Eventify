@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-12">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-fullmx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <!-- Header -->
             <div class="bg-gradient-to-r from-[#262363] to-[#00183c] px-6 py-4">

@@ -29,7 +29,7 @@
     <!-- Header dengan Actions -->
     <div class="flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Booking #{{ $booking->booking_code }}</h1>
+            
             <p class="text-gray-600 mt-2">Detail pemesanan untuk acara Anda</p>
         </div>
         <div class="flex items-center space-x-3">

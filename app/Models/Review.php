@@ -1,5 +1,4 @@
 <?php
-// app/Models/Review.php
 
 namespace App\Models;
 
@@ -33,37 +32,21 @@ class Review extends Model
         'rating' => 'integer',
     ];
 
-    // ==================== RELATIONSHIPS ====================
-
-    /**
-     * Get the user that wrote the review.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the event being reviewed.
-     */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
 
-    /**
-     * Get the booking associated with this review.
-     */
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
     }
 
-    // ==================== HELPER METHODS ====================
-
-    /**
-     * Get star rating as HTML.
-     */
     public function getStarRatingAttribute(): string
     {
         $stars = '';

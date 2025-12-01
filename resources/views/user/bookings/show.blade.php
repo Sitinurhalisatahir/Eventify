@@ -20,7 +20,9 @@
                            'bg-red-100 text-red-800') }}">
                         {{ $booking->status === 'approved' ? 'Disetujui' : ($booking->status === 'pending' ? 'Menunggu' : 'Dibatalkan') }}
                     </span>
-                    <p class="text-sm text-gray-500 mt-1">{{ $booking->created_at->format('d M Y \\j\\a\\m H:i') }}</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {{ $booking->created_at->timezone('Asia/Makassar')->format('d/m/Y H:i') }} WITA
+                    </p>
                 </div>
             </div>
         </div>

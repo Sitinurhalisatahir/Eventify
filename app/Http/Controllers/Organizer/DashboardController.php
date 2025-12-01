@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/Organizer/DashboardController.php
 
 namespace App\Http\Controllers\Organizer;
 
@@ -11,24 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display organizer dashboard.
-     */
     public function index()
     {
         $organizer = auth()->user();
 
-        // Total Statistics (hanya event sendiri)
         $totalEvents = $organizer->events()->count();
         $publishedEvents = $organizer->events()->where('status', 'published')->count();
         $draftEvents = $organizer->events()->where('status', 'draft')->count();
         
-        // Total Bookings for organizer's events
         $totalBookings = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
             $query->where('organizer_id', $organizer->id);
         })->count();
         
-        // Revenue Statistics
         $totalRevenue = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
             $query->where('organizer_id', $organizer->id);
         })
@@ -42,14 +35,12 @@ class DashboardController extends Controller
         ->whereMonth('created_at', now()->month)
         ->sum('total_price');
         
-        // Pending Bookings (yang perlu di-approve)
         $pendingBookings = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
             $query->where('organizer_id', $organizer->id);
         })
         ->where('status', 'pending')
         ->count();
         
-        // Recent Bookings (5 terbaru)
         $recentBookings = Booking::with(['user', 'ticket.event'])
             ->whereHas('ticket.event', function ($query) use ($organizer) {
                 $query->where('organizer_id', $organizer->id);
@@ -58,9 +49,8 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
         
-        // My Popular Events (by booking count)
         $popularEvents = $organizer->events()
-         ->with(['tickets.bookings']) // Load relationships
+         ->with(['tickets.bookings']) 
          ->get()
          ->map(function ($event) {
             $event->bookings_count = $event->tickets->sum(function ($ticket) {
@@ -70,13 +60,7 @@ class DashboardController extends Controller
         })
         ->sortByDesc('bookings_count')
         ->take(5);
-        // $popularEvents = $organizer->events()
-        //     ->withCount('bookings')
-        //     ->orderBy('bookings_count', 'desc')
-        //     ->take(5)
-        //     ->get();
-        
-        // Booking Status Distribution
+
         $bookingsByStatus = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
             $query->where('organizer_id', $organizer->id);
         })
@@ -85,7 +69,6 @@ class DashboardController extends Controller
         ->get()
         ->pluck('total', 'status');
         
-        // Monthly Booking Chart Data (last 6 months)
         $monthlyBookings = Booking::whereHas('ticket.event', function ($query) use ($organizer) {
             $query->where('organizer_id', $organizer->id);
         })
@@ -100,7 +83,6 @@ class DashboardController extends Controller
         ->orderBy('month', 'asc')
         ->get();
 
-        // Upcoming Events
         $upcomingEvents = $organizer->events()
             ->where('status', 'published')
             ->where('event_date', '>', now())

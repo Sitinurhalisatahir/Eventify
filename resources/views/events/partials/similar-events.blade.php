@@ -1,12 +1,12 @@
 {{-- Similar Events Partial --}}
 @if($similarEvents->count() > 0)
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-        <h3 class="text-lg font-bold text-gray-900 mb-4">Similar Events</h3>
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Acara Lain</h3>
         <div class="space-y-4">
             @foreach($similarEvents as $similarEvent)
                 <a href="{{ route('events.show', $similarEvent) }}" class="flex items-center space-x-3 group">
                     @if($similarEvent->image)
-                        <img src="{{ asset('storage/' . $organizer->photo) }}" alt="{{ $organizer->name }}" class="w-16 h-16 rounded-lg object-cover">
+                        <img src="{{ asset('storage/' . $similarEvent->image) }}" alt="{{ $similarEvent->name }}" class="w-16 h-16 rounded-lg object-cover">
                     @else
                         <div class="w-16 h-16 bg-gradient-to-br from-[#00A3FF] to-[#8A2BE2] rounded-lg flex items-center justify-center">
                             <i class="fas fa-calendar-alt text-white text-sm"></i>

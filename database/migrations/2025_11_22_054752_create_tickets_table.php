@@ -15,25 +15,23 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             
-            // Foreign Key
+            
             $table->foreignId('event_id')
                   ->constrained('events')
-                  ->onDelete('cascade'); // Hapus ticket jika event dihapus
-            
-            // Ticket Information
-            $table->string('name'); // Contoh: VIP, Regular, Early Bird
+                  ->onDelete('cascade');
+
+            $table->string('name'); 
             $table->text('description')->nullable();
-            $table->decimal('price', 10, 2); // Harga tiket (max 99,999,999.99)
+            $table->decimal('price', 10, 2); 
             
-            // Quota Management
-            $table->integer('quota'); // Total kuota tiket
-            $table->integer('quota_remaining'); // Sisa kuota (berkurang saat booking)
+      
+            $table->integer('quota'); 
+            $table->integer('quota_remaining'); 
             
-            $table->string('image')->nullable(); // Path ke gambar tiket
+            $table->string('image')->nullable();
             
             $table->timestamps();
             
-            // Index untuk performa
             $table->index('event_id');
         });
     }

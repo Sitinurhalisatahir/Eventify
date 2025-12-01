@@ -1,6 +1,6 @@
 {{-- Organizer Info Partial --}}
 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-    <h3 class="text-lg font-bold text-gray-900 mb-4">Organizer</h3>
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Penyelenggara</h3>
     <div class="flex items-center space-x-3 mb-4">
         @if($event->organizer->photo)
             <img src="{{ assets('stroge/'. $event->organizer->photo) }}" alt="{{ $event->organizer->name }}" class="w-12 h-12 rounded-full object-cover">
@@ -11,8 +11,8 @@
         @endif
         <div>
             <h4 class="font-semibold text-gray-900">{{ $event->organizer->name }}</h4>
-            <p class="text-sm text-gray-500">Event Organizer</p>
+            <p class="text-sm text-gray-500">Acara Organizer</p>
         </div>
     </div>
-    <p class="text-gray-600 text-sm">Contact the organizer for any questions about this event.</p>
+    <p class="text-gray-600 text-sm">Hubungi penyelenggara untuk pertanyaan apa pun tentang acara ini</p>
 </div>

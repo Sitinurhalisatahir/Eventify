@@ -12,13 +12,11 @@ class AnalyticsController extends Controller
 {
     public function index(Request $request)
     {
-        // Disable strict mode
         config(['database.connections.mysql.strict' => false]);
         \DB::reconnect();
 
         $organizerId = auth()->id();
 
-        // Get period from request with default
         $period = $request->get('period', '12months');
         
         $monthsBack = match($period) {
@@ -27,7 +25,6 @@ class AnalyticsController extends Controller
             default => 12,
         };
 
-        // Monthly Revenue Trend
         $monthlyRevenueTrend = Booking::select(
                 DB::raw('YEAR(bookings.created_at) as year'),
                 DB::raw('MONTH(bookings.created_at) as month'),
@@ -49,7 +46,6 @@ class AnalyticsController extends Controller
                 ];
             });
 
-        // Revenue Growth Rate
         $currentMonthRevenue = Booking::join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
             ->join('events', 'tickets.event_id', '=', 'events.id')
             ->where('events.organizer_id', $organizerId)
@@ -70,7 +66,6 @@ class AnalyticsController extends Controller
             ? (($currentMonthRevenue - $previousMonthRevenue) / $previousMonthRevenue) * 100 
             : 0;
 
-        // Monthly Bookings Trend
         $monthlyBookingsTrend = Booking::select(
                 DB::raw('YEAR(bookings.created_at) as year'),
                 DB::raw('MONTH(bookings.created_at) as month'),
@@ -91,7 +86,6 @@ class AnalyticsController extends Controller
                 ];
             });
 
-        // Event Performance
         $eventPerformance = Event::where('organizer_id', $organizerId)
             ->where('status', 'published')
             ->withCount(['bookings' => function ($query) {
@@ -155,7 +149,6 @@ class AnalyticsController extends Controller
             'revenue_growth_rate' => round($revenueGrowthRate, 2),
         ];
 
-        // Re-enable strict mode
         config(['database.connections.mysql.strict' => true]);
 
         return view('organizer.analytics.index', compact(

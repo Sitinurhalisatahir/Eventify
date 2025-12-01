@@ -1,4 +1,3 @@
-{{-- resources/views/admin/analytics/index.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Dashboard Analitik')
@@ -6,7 +5,6 @@
 @section('content')
 <div class="space-y-6">
 
-    <!-- Filter Periode -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
             <i class="fas fa-calendar-alt mr-2 text-blue-600"></i>
@@ -24,7 +22,6 @@
         </form>
     </div>
 
-    <!-- Metrik Utama -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <x-cards.stats-card 
             title="Total Pendapatan" 
@@ -51,7 +48,6 @@
             color="{{ $keyMetrics['revenue_growth_rate'] >= 0 ? 'green' : 'red' }}" />
     </div>
 
-    <!-- Tambahkan di bagian mana saja setelah Metrik Utama -->
 
 <!-- Pendapatan Organizer/EO -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">

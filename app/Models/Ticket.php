@@ -1,5 +1,4 @@
 <?php
-// app/Models/Ticket.php
 
 namespace App\Models;
 
@@ -38,53 +37,32 @@ class Ticket extends Model
         'quota_remaining' => 'integer',
     ];
 
-    // ==================== RELATIONSHIPS ====================
-
-    /**
-     * Get the event that owns this ticket.
-     */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
 
-    /**
-     * Get the bookings for this ticket.
-     */
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
     }
 
-    // ==================== HELPER METHODS ====================
-
-    /**
-     * Check if ticket is available.
-     */
     public function isAvailable(): bool
     {
         return $this->quota_remaining > 0;
     }
 
-    /**
-     * Check if ticket is sold out.
-     */
+
     public function isSoldOut(): bool
     {
         return $this->quota_remaining <= 0;
     }
 
-    /**
-     * Get sold tickets count.
-     */
     public function getSoldCountAttribute(): int
     {
         return $this->quota - $this->quota_remaining;
     }
 
-    /**
-     * Get sold percentage.
-     */
     public function getSoldPercentageAttribute(): float
     {
         if ($this->quota == 0) {
@@ -93,17 +71,11 @@ class Ticket extends Model
         return ($this->sold_count / $this->quota) * 100;
     }
 
-    /**
-     * Decrease quota (when booking is made).
-     */
     public function decreaseQuota(int $quantity = 1): void
     {
         $this->decrement('quota_remaining', $quantity);
     }
 
-    /**
-     * Increase quota (when booking is cancelled).
-     */
     public function increaseQuota(int $quantity = 1): void
     {
         $this->increment('quota_remaining', $quantity);

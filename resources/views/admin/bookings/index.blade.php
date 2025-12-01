@@ -1,4 +1,3 @@
-{{-- resources/views/admin/bookings/index.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Manajemen Pemesanan')

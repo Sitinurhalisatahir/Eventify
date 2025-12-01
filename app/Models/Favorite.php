@@ -1,5 +1,4 @@
 <?php
-// app/Models/Favorite.php
 
 namespace App\Models;
 
@@ -21,19 +20,11 @@ class Favorite extends Model
         'event_id',
     ];
 
-    // ==================== RELATIONSHIPS ====================
-
-    /**
-     * Get the user that favorited the event.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the event that was favorited.
-     */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

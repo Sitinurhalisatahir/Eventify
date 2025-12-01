@@ -2,7 +2,7 @@
 @if($event->reviews->count() > 0)
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold text-gray-900">Reviews</h3>
+            <h3 class="text-xl font-bold text-gray-900">Review</h3>
             <div class="flex items-center space-x-2">
                 <div class="flex items-center">
                     @for($i = 1; $i <= 5; $i++)
@@ -15,7 +15,7 @@
                         @endif
                     @endfor
                 </div>
-                <span class="text-gray-600 font-semibold">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} reviews)</span>
+                <span class="text-gray-600 font-semibold">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} review)</span>
             </div>
         </div>
 
@@ -33,10 +33,35 @@
                             @endif
                             <span class="font-semibold text-gray-900">{{ $review->user->name }}</span>
                         </div>
-                        <div class="flex items-center space-x-1">
-                            @for($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }} text-sm"></i>
-                            @endfor
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-1">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <i class="fas fa-star {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }} text-sm"></i>
+                                @endfor
+                            </div>
+                            
+                            <!-- Tombol Edit & Delete untuk review sendiri -->
+                            @auth
+                                @if(auth()->id() === $review->user_id)
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <a href="{{ route('user.reviews.edit', $review) }}" 
+                                           class="text-blue-600 hover:text-blue-800 text-sm transition-colors"
+                                           title="Edit Review">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('user.reviews.destroy', $review) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                    class="text-red-600 hover:text-red-800 text-sm transition-colors"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus review ini?')"
+                                                    title="Hapus Review">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                     <p class="text-gray-700">{{ $review->comment }}</p>

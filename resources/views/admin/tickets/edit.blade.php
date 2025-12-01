@@ -1,4 +1,3 @@
-{{-- resources/views/admin/tickets/edit.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Edit Tiket')
