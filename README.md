@@ -606,7 +606,7 @@ categories (id, name, slug, icon, color)
 
 
 ----
-```
+
 ### **👨‍💻 Akun Default**
 **Akun Admin**
 - Email: admin@eventify.com
@@ -622,6 +622,7 @@ categories (id, name, slug, icon, color)
 - Email: jane@example.com
 - Kata Sandi: password123
 - Fitur: Pesan Tiket, Riview dan Bisa Favorit Event
+
 
 ---
 
