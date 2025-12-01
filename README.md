@@ -577,9 +577,9 @@ npm run build
 ```
 
 ---
-```
-### 🗄 Database Schema
 
+### 🗄 Database Schema
+```plaintext
 users (id, name, email, role, organizer_status, profile_image)
   │
   ├─1:N─► events (id, organizer_id, category_id, name, event_date, ...)
@@ -597,7 +597,7 @@ users (id, name, email, role, organizer_status, profile_image)
 categories (id, name, slug, icon, color)
   │
   └─1:N─► events
-  ```
+```
  ---
 
  
