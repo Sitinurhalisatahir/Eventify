@@ -390,6 +390,7 @@ e-ticketing-event/
 
 ```
 ---
+```
 ## 🏗️ Struktur File & Fungsionalitas
 
 ### 🔐 **AUTHENTICATION SYSTEM** (`app/Http/Controllers/Auth/`)
@@ -561,6 +562,9 @@ e-ticketing-event/
 - **Authentication:** Laravel Breeze
 - **File Storage:** Local/Flysystem
 - **Icons:** Font Awesome
+  
+```
+---
 
 ## 📦 **INSTALASI**
 ```bash
