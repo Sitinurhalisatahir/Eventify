@@ -10,6 +10,14 @@ Platform e-ticketing event modern yang memudahkan pengguna menemukan, memesan ti
 - Guest - Jelajahi event tanpa login
 ---
 
+## 🛠️ **TEKNOLOGI**
+- **Backend:** Laravel 10, PHP 8.1+
+- **Frontend:** Tailwind CSS, Alpine.js
+- **Database:** MySQL
+- **Authentication:** Laravel Breeze
+- **File Storage:** Local/Flysystem
+- **Icons:** Font Awesome
+
 ### Struktur Project
 ```plaintext
 e-ticketing-event/
@@ -555,26 +563,8 @@ e-ticketing-event/
 - 📈 Reports penjualan & growth
 - 🔧 Moderasi content
 
-## 🛠️ **TEKNOLOGI**
-- **Backend:** Laravel 10, PHP 8.1+
-- **Frontend:** Tailwind CSS, Alpine.js
-- **Database:** MySQL
-- **Authentication:** Laravel Breeze
-- **File Storage:** Local/Flysystem
-- **Icons:** Font Awesome
-  
-```
 
-```
-## 📦 **INSTALASI**
-composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate --seed
-php artisan storage:link
-npm run build
-```
+  
 
 ---
 
