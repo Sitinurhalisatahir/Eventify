@@ -389,7 +389,6 @@ e-ticketing-event/
    - npm run dev
 
 ```
----
 
 ```
 ## 🏗️ Struktur File & Fungsionalitas
@@ -565,10 +564,9 @@ e-ticketing-event/
 - **Icons:** Font Awesome
   
 ```
----
 
+```
 ## 📦 **INSTALASI**
-```bash
 composer install
 npm install
 cp .env.example .env
@@ -579,9 +577,9 @@ npm run build
 ```
 
 ---
-
+```
 ### 🗄 Database Schema
-```plaintext
+
 users (id, name, email, role, organizer_status, profile_image)
   │
   ├─1:N─► events (id, organizer_id, category_id, name, event_date, ...)
@@ -608,9 +606,8 @@ categories (id, name, slug, icon, color)
 
 
 ----
-  
+```
 ### **👨‍💻 Akun Default**
-``
 **Akun Admin**
 - Email: admin@eventify.com
 - Kata Sandi: password123
