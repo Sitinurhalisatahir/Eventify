@@ -56,7 +56,7 @@
                                 <a href="{{ route('login') }}" 
                                    class="bg-[#e6527b] text-white px-6 py-3 rounded-lg hover:bg-[#d9416d] font-semibold transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center">
                                     <i class="fas fa-sign-in-alt mr-2"></i>
-                                    Login untuk Memesan
+                                    Masuk untuk Memesan
                                 </a>
                             @endauth
                         @else

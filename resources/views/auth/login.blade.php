@@ -41,7 +41,7 @@
 
                     <!-- Password -->
                     <div>
-                        <x-input-label for="password" value="Password" class="text-gray-700 font-medium mb-2 text-lg" />
+                        <x-input-label for="password" value="Kata Sandi" class="text-gray-700 font-medium mb-2 text-lg" />
                         <x-text-input 
                             id="password" 
                             class="block w-full border-gray-300 focus:border-[#e6527b] focus:ring-[#e6527b] rounded-lg py-4 px-4 text-lg"
@@ -49,7 +49,7 @@
                             name="password"
                             required 
                             autocomplete="current-password"
-                            placeholder="Masukkan password Anda"
+                            placeholder="Masukkan Kata Sandi Anda"
                         />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>

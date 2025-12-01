@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/Admin/DashboardController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -13,12 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display admin dashboard.
-     */
+   
     public function index()
     {
-        // Total Statistics
         $totalUsers = User::where('role', 'user')->count();
         $totalOrganizers = User::where('role', 'organizer')
                                 ->where('organizer_status', 'approved')
@@ -26,12 +22,10 @@ class DashboardController extends Controller
         $totalEvents = Event::where('status', 'published')->count();
         $totalBookings = Booking::count();
         
-        // Pending Approvals
         $pendingOrganizers = User::where('role', 'organizer')
                                   ->where('organizer_status', 'pending')
                                   ->count();
         
-        // Revenue Statistics
         $totalRevenue = Booking::where('status', 'approved')
                                ->sum('total_price');
         
@@ -45,7 +39,7 @@ class DashboardController extends Controller
                                  ->take(5)
                                  ->get();
         
-        // Popular Events (by booking count)
+        
         $popularEvents = Event::select('events.*')
         ->addSelect(['bookings_count' => Booking::select(DB::raw('count(*)'))
         ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
@@ -54,25 +48,16 @@ class DashboardController extends Controller
         ->orderBy('bookings_count', 'desc')
         ->take(5)
         ->get();
-        // $popularEvents = Event::withCount('bookings')
-        //                       ->orderBy('bookings_count', 'desc')
-        //                       ->take(5)
-        //                       ->get();
 
-        
-        
-        // Booking Status Distribution
         $bookingsByStatus = Booking::select('status', DB::raw('count(*) as total'))
                                    ->groupBy('status')
                                    ->get()
                                    ->pluck('total', 'status');
-        
-        // Events by Category
+
         $eventsByCategory = Category::withCount('events')
                                     ->having('events_count', '>', 0)
                                     ->get();
         
-        // Monthly Booking Chart Data (last 6 months)
         $monthlyBookings = Booking::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('YEAR(created_at) as year'),

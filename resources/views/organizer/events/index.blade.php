@@ -1,7 +1,7 @@
 {{-- resources/views/organizer/events/index.blade.php --}}
 @extends('layouts.organizer')
 
-@section('header', 'Acara Saya')
+@section('header', 'Acara Organizer')
 
 @section('content')
 <div class="space-y-6">

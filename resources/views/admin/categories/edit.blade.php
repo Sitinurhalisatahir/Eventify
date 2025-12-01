@@ -1,4 +1,3 @@
-{{-- resources/views/admin/categories/edit.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Edit Kategori')
@@ -233,7 +232,7 @@
                         <button type="submit"
                                 class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#262363] to-[#00183c] text-white rounded-xl hover:from-[#1e1a4f] hover:to-[#001225] transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl">
                             <i class="fas fa-save mr-2"></i>
-                            Update Kategori
+                            Perbarui Kategori
                         </button>
                     </div>
                 </div>

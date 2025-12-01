@@ -50,7 +50,6 @@ class StoreBookingRequest extends FormRequest
             $ticket = Ticket::find($this->ticket_id);
 
             if ($ticket) {
-                // Check if ticket is available
                 if ($ticket->quota_remaining < $this->quantity) {
                     $validator->errors()->add(
                         'quantity',
@@ -58,7 +57,6 @@ class StoreBookingRequest extends FormRequest
                     );
                 }
 
-                // Check if ticket is sold out
                 if ($ticket->quota_remaining <= 0) {
                     $validator->errors()->add(
                         'ticket_id',

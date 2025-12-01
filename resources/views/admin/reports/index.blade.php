@@ -1,4 +1,3 @@
-{{-- resources/views/admin/reports/index.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Laporan Penjualan & Analitik')

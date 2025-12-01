@@ -1,4 +1,3 @@
-{{-- resources/views/admin/categories/create.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Buat Kategori')

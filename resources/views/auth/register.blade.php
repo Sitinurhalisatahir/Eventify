@@ -69,7 +69,7 @@
 
                     <!-- Password -->
                     <div>
-                        <x-input-label for="password" value="Password" class="text-gray-700 font-medium mb-2" />
+                        <x-input-label for="password" value="Kata Sandi" class="text-gray-700 font-medium mb-2" />
                         <x-text-input 
                             id="password" 
                             class="block w-full border-gray-300 focus:border-[#e6527b] focus:ring-[#e6527b] rounded-lg py-3 px-4"
@@ -77,14 +77,14 @@
                             name="password"
                             required 
                             autocomplete="new-password"
-                            placeholder="Buat password Anda"
+                            placeholder="Buat Kata Sandi Anda"
                         />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <!-- Confirm Password -->
                     <div>
-                        <x-input-label for="password_confirmation" value="Konfirmasi Password" class="text-gray-700 font-medium mb-2" />
+                        <x-input-label for="password_confirmation" value="Konfirmasi Kata Sandi" class="text-gray-700 font-medium mb-2" />
                         <x-text-input 
                             id="password_confirmation" 
                             class="block w-full border-gray-300 focus:border-[#e6527b] focus:ring-[#e6527b] rounded-lg py-3 px-4"
@@ -92,7 +92,7 @@
                             name="password_confirmation" 
                             required 
                             autocomplete="new-password"
-                            placeholder="Ulangi password Anda"
+                            placeholder="Ulangi Kata Sandi Anda"
                         />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>

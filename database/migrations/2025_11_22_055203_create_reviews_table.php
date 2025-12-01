@@ -1,5 +1,4 @@
 <?php
-// database/migrations/2025_11_22_055203_create_reviews_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +14,6 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             
-            // Foreign Keys
             $table->foreignId('user_id')
                   ->constrained('users')
                   ->onDelete('cascade');
@@ -26,18 +24,15 @@ return new class extends Migration
             
             $table->foreignId('booking_id')
                   ->constrained('bookings')
-                  ->onDelete('cascade'); // Hanya bisa review jika sudah booking
-            
-            // Review Information
-            $table->integer('rating'); // 1-5 stars
+                  ->onDelete('cascade'); 
+
+            $table->integer('rating'); 
             $table->text('comment')->nullable();
             
             $table->timestamps();
             
-            // Unique constraint: user hanya bisa review 1x per event
             $table->unique(['user_id', 'event_id']);
             
-            // Indexes untuk performa
             $table->index('event_id');
             $table->index('rating');
         });

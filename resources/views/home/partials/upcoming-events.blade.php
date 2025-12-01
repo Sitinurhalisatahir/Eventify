@@ -1,20 +1,14 @@
 {{-- Upcoming Events Section --}}
 <section class="py-16 bg-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-12">
-            <div>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Acara Mendatang
-                </h2>
-                <p class="text-lg text-gray-600">
-                    Jangan lewatkan acara-acara seru yang akan datang
-                </p>
-            </div>
-            <a href="{{ route('events.index') }}" 
-               class="hidden md:flex items-center bg-[#262363] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#00183c] transition-colors text-lg">
-                <i class="fas fa-list mr-3"></i>
-                Lihat Semua
-            </a>
+        {{-- Header Section --}}
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Acara Mendatang
+            </h2>
+            <p class="text-lg text-gray-600">
+                Jangan lewatkan acara-acara seru yang akan datang
+            </p>
         </div>
 
         @if($upcomingEvents->count() > 0)
@@ -31,12 +25,12 @@
                 </div>
             @endif
             
-            <!-- Mobile CTA -->
-            <div class="text-center mt-8 md:hidden">
+            {{-- CTA Button --}}
+            <div class="text-center mt-11">
                 <a href="{{ route('events.index') }}" 
-                   class="inline-flex items-center bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-xl hover:bg-gray-50 font-semibold transition-all duration-300">
+                   class="inline-flex items-center bg-[#262363] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#00183c] transition-colors text-lg">
                     <i class="fas fa-list mr-3"></i>
-                    Lihat Semua Acara
+                    Lihat Semua
                 </a>
             </div>
         @else

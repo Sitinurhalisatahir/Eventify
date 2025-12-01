@@ -1,7 +1,7 @@
 {{-- resources/views/organizer/bookings/index.blade.php --}}
 @extends('layouts.organizer')
 
-@section('header', 'Pemesanan Acara Saya')
+@section('header', 'Pemesanan Acara Organizer')
 
 @section('content')
 <div class="space-y-6">
@@ -216,7 +216,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex items-center space-x-2">
                                         <a href="{{ route('organizer.bookings.show', $booking) }}" 
-                                           class="inline-flex items-center px-3 py-2 bg-[#262363] text-white rounded-xl hover:bg-blue-600 transition-all duration-300 text-sm font-semibold">
+                                           class="inline-flex items-center px-3 py-2 bg-[#262363] text-white rounded-xl hover:bg-[#141236] transition-all duration-300 text-sm font-semibold">
                                             <i class="fas fa-eye mr-1"></i>
                                             Lihat
                                         </a>

@@ -15,48 +15,34 @@ use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
         $user = $request->user();
-        
-        // Determine which view to show based on role
-        // Bisa pakai view yang sama atau berbeda per role
+
         return view('profile.edit', compact('user'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-{
+    {
     $user = $request->user();
     
-    // Fill validated data
     $user->fill($request->validated());
 
-    // If email changed, reset email_verified_at
     if ($user->isDirty('email')) {
         $user->email_verified_at = null;
     }
 
-    // Handle profile image upload
     if ($request->hasFile('profile_image')) {
-        // Delete old image if exists
         if ($user->profile_image) {
             Storage::disk('public')->delete($user->profile_image);
         }
 
-        // Store new image - HANYA SATU KALI
         $path = $request->file('profile_image')->store('profiles', 'public');
         $user->profile_image = $path;
     }
 
     $user->save();
 
-    // Redirect based on role
     $redirectRoute = match($user->role) {
         'admin' => 'admin.dashboard',
         'organizer' => 'organizer.dashboard',
@@ -67,9 +53,6 @@ class ProfileController extends Controller
         ->with('success', 'Profile updated successfully!');
 }
 
-    /**
-     * Update the user's password.
-     */
     public function updatePassword(Request $request): RedirectResponse
     {
         $validated = $request->validateWithBag('updatePassword', [
@@ -84,9 +67,6 @@ class ProfileController extends Controller
         return back()->with('success', 'Password updated successfully!');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -95,7 +75,6 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        // Check if organizer has events
         if ($user->role === 'organizer') {
             $hasEvents = $user->events()->exists();
             if ($hasEvents) {
@@ -105,7 +84,6 @@ class ProfileController extends Controller
             }
         }
 
-        // Check if user has active bookings
         if ($user->role === 'user') {
             $hasActiveBookings = $user->bookings()
                 ->whereIn('status', ['pending', 'approved'])
@@ -118,7 +96,6 @@ class ProfileController extends Controller
             }
         }
 
-        // Delete profile image if exists
         if ($user->profile_image) {
             Storage::disk('public')->delete($user->profile_image);
         }

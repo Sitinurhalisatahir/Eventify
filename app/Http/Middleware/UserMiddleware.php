@@ -9,12 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
+   
     public function handle(Request $request, Closure $next): Response
     {
-        // Cek apakah user sudah login dan rolenya user
+        
         if (!auth()->check() || auth()->user()->role !== 'user') {
             abort(403, 'Unauthorized access. User only.');
         }

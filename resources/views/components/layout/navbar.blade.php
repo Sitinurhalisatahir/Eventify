@@ -71,11 +71,11 @@
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100"
                              style="display: none;">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                                <i class="fas fa-user-edit mr-2"></i> Edit Profile
+                                <i class="fas fa-user-edit mr-2"></i> Edit Profil
                             </a>
                             @if(auth()->user()->role === 'user')
                                 <a href="{{ route('user.bookings.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
-                                    <i class="fas fa-ticket-alt mr-2"></i> My Bookings
+                                    <i class="fas fa-ticket-alt mr-2"></i> Pesanan Saya
                                 </a>
                             @endif
                             <hr class="my-2 border-gray-100">
@@ -121,32 +121,32 @@
                     </a>
                 @else
                     <a href="{{ route('user.dashboard') }}" class="block py-3 text-gray-700 hover:text-[#e6527b] font-medium transition-colors border-b border-gray-100">
-                        <i class="fas fa-user mr-3"></i> My Dashboard
+                        <i class="fas fa-user mr-3"></i> Dashboard Saya
                     </a>
                     <a href="{{ route('user.favorites.index') }}" class="block py-3 text-gray-700 hover:text-[#e6527b] font-medium transition-colors border-b border-gray-100">
                         <i class="fas fa-heart mr-3"></i> Favorites
                     </a>
                     <a href="{{ route('user.bookings.index') }}" class="block py-3 text-gray-700 hover:text-[#e6527b] font-medium transition-colors border-b border-gray-100">
-                        <i class="fas fa-ticket-alt mr-3"></i> My Bookings
+                        <i class="fas fa-ticket-alt mr-3"></i> Pesanan Saya
                     </a>
                 @endif
 
                 <hr class="my-2 border-gray-100">
                 <a href="{{ route('profile.edit') }}" class="block py-3 text-gray-700 hover:text-[#e6527b] font-medium transition-colors border-b border-gray-100">
-                    <i class="fas fa-user-edit mr-3"></i> Edit Profile
+                    <i class="fas fa-user-edit mr-3"></i> Edit Profil
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full text-left py-3 text-red-600 hover:text-red-700 font-medium transition-colors">
-                        <i class="fas fa-sign-out-alt mr-3"></i> Logout
+                        <i class="fas fa-sign-out-alt mr-3"></i> Keluar
                     </button>
                 </form>
             @else
                 <a href="{{ route('login') }}" class="block py-3 text-gray-700 hover:text-[#e6527b] font-medium transition-colors border-b border-gray-100">
-                    <i class="fas fa-sign-in-alt mr-3"></i> Login
+                    <i class="fas fa-sign-in-alt mr-3"></i> Masuk
                 </a>
                 <a href="{{ route('register') }}" class="block py-3 bg-[#e6527b] text-white rounded-xl text-center hover:bg-[#d9416d] font-semibold transition-all duration-300 mt-2">
-                    <i class="fas fa-user-plus mr-3"></i> Register
+                    <i class="fas fa-user-plus mr-3"></i> Daftar
                 </a>
             @endguest
         </div>

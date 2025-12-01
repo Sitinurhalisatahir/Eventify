@@ -29,14 +29,14 @@
                 </a>
             @else
                 <button disabled class="w-full bg-gray-300 text-gray-500 py-4 px-6 rounded-xl font-bold text-lg cursor-not-allowed">
-                    Login sebagai User untuk Memesan
+                    Masuk sebagai Penggunauntuk Memesan
                 </button>
             @endif
         @else
             <a href="{{ route('login') }}" 
                class="w-full bg-[#e6527b] text-white py-4 px-6 rounded-xl hover:bg-[#d9416d] font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl text-center block">
                 <i class="fas fa-sign-in-alt mr-2"></i>
-                Login untuk Memesan
+                Masuk untuk Memesan
             </a>
         @endauth
     @else

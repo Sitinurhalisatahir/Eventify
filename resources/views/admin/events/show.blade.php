@@ -1,4 +1,3 @@
-{{-- resources/views/admin/events/show.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Detail Acara')

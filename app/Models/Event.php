@@ -1,5 +1,4 @@
 <?php
-// app/Models/Event.php
 
 namespace App\Models;
 
@@ -37,35 +36,22 @@ class Event extends Model
         'event_date' => 'datetime',
     ];
 
-    // ==================== RELATIONSHIPS ====================
-
-    /**
-     * Get the organizer (user) that created this event.
-     */
+    
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
-    /**
-     * Get the category for this event.
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get the tickets for this event.
-     */
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }
 
-    /**
-     * Get the bookings for this event.
-     */
     public function bookings()
 {
     return $this->hasManyThrough(
@@ -75,128 +61,81 @@ class Event extends Model
         'ticket_id', // Foreign key on bookings table  
         'id',        // Local key on events table
         'id'         // Local key on tickets table
+
+        
     );
 }
 
-    /**
-     * Get the favorites for this event.
-     */
     public function favorites(): HasMany
     {
         return $this->hasMany(Favorite::class);
     }
 
-    /**
-     * Get the reviews for this event.
-     */
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    // ==================== HELPER METHODS ====================
-
-    /**
-     * Check if event is published.
-     */
     public function isPublished(): bool
     {
         return $this->status === 'published';
     }
 
-    /**
-     * Check if event is draft.
-     */
     public function isDraft(): bool
     {
         return $this->status === 'draft';
     }
 
-    /**
-     * Check if event is cancelled.
-     */
     public function isCancelled(): bool
     {
         return $this->status === 'cancelled';
     }
 
-    /**
-     * Check if event date has passed.
-     */
     public function isPast(): bool
     {
         return $this->event_date->isPast();
     }
 
-    /**
-     * Check if event is upcoming.
-     */
     public function isUpcoming(): bool
     {
         return $this->event_date->isFuture();
     }
 
-    /**
-     * Get the cheapest ticket price.
-     */
     public function getCheapestPriceAttribute()
     {
         return $this->tickets()->min('price') ?? 0;
     }
 
-    /**
-     * Get total available tickets.
-     */
     public function getTotalAvailableTicketsAttribute(): int
     {
         return $this->tickets()->sum('quota_remaining');
     }
 
-    /**
-     * Check if event has available tickets.
-     */
     public function hasAvailableTickets(): bool
     {
         return $this->total_available_tickets > 0;
     }
 
-    /**
-     * Get average rating.
-     */
     public function getAverageRatingAttribute()
     {
         return $this->reviews()->avg('rating') ?? 0;
     }
 
-    /**
-     * Get total reviews count.
-     */
     public function getTotalReviewsAttribute(): int
     {
         return $this->reviews()->count();
     }
 
-    // ==================== SCOPES ====================
-
-    /**
-     * Scope a query to only include published events.
-     */
     public function scopePublished($query)
     {
         return $query->where('status', 'published');
     }
 
-    /**
-     * Scope a query to only include upcoming events.
-     */
     public function scopeUpcoming($query)
     {
         return $query->where('event_date', '>', now());
     }
 
-    /**
-     * Scope a query to filter by category.
-     */
     public function scopeByCategory($query, $categoryId)
     {
         return $query->where('category_id', $categoryId);

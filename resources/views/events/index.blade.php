@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Browse Events - ' . config('app.name', 'Eventify'))
+@section('title', 'jelajahi acara - ' . config('app.name', 'Eventify'))
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Browse Events</h1>
-            <p class="text-gray-600">Discover amazing events around you</p>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Jelajahi Acara</h1>
+            <p class="text-gray-600">Temukan acara menarik di sekitar Anda</p>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8">

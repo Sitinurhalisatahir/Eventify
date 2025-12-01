@@ -1,4 +1,3 @@
-{{-- resources/views/admin/events/create.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Buat Acara')

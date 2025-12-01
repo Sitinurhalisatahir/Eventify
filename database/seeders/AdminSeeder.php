@@ -23,7 +23,6 @@ class AdminSeeder extends Seeder
             'phone' => '081234567890',
         ]);
 
-        // Optional: Buat admin kedua untuk testing
         User::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@eventify.com',

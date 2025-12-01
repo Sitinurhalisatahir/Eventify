@@ -1,4 +1,3 @@
-{{-- resources/views/admin/events/index.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Manajemen Acara')
@@ -12,7 +11,7 @@
             <p class="text-gray-600 mt-1">Kelola semua acara dalam sistem</p>
         </div>
         <a href="{{ route('admin.events.create') }}" 
-           class="inline-flex items-center px-5 py-2.5 bg-[#e692b7] text-white rounded-lg hover:bg-[#d87ba8] transition-all duration-300 font-semibold shadow-md hover:shadow-lg">
+           class="inline-flex items-center px-5 py-2.5 bg-[#f7549a] text-white rounded-lg hover:bg-[#e1498b] transition-all duration-300 font-semibold hover:shadow-lg">
             <i class="fas fa-plus mr-2"></i>
             Buat Acara Baru
         </a>

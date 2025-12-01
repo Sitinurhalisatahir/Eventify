@@ -52,7 +52,6 @@ class StoreTicketRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // Set quota_remaining sama dengan quota saat create
         if ($this->isMethod('POST')) {
             $this->merge([
                 'quota_remaining' => $this->quota,

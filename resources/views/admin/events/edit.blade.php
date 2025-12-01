@@ -1,4 +1,3 @@
-{{-- resources/views/admin/events/edit.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Edit Event')

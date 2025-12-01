@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/Organizer/BookingController.php
 
 namespace App\Http\Controllers\Organizer;
 
@@ -9,9 +8,6 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    /**
-     * Display bookings for organizer's events.
-     */
     public function index(Request $request)
     {
         $organizer = auth()->user();
@@ -21,19 +17,15 @@ class BookingController extends Controller
                 $q->where('organizer_id', $organizer->id);
             });
 
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
-
-        // Filter by event
         if ($request->filled('event')) {
             $query->whereHas('ticket', function ($q) use ($request) {
                 $q->where('event_id', $request->event);
             });
         }
 
-        // Search by booking code or user name
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('booking_code', 'like', '%' . $request->search . '%')
@@ -46,10 +38,8 @@ class BookingController extends Controller
 
         $bookings = $query->latest()->paginate(15);
 
-        // Get organizer's events for filter
         $events = $organizer->events()->where('status', 'published')->get();
 
-        // Count by status
         $pendingCount = Booking::whereHas('ticket.event', function ($q) use ($organizer) {
             $q->where('organizer_id', $organizer->id);
         })->where('status', 'pending')->count();
@@ -71,12 +61,8 @@ class BookingController extends Controller
         ));
     }
 
-    /**
-     * Display the specified booking.
-     */
     public function show(Booking $booking)
     {
-        // Authorization: hanya bisa lihat booking untuk event sendiri
         if ($booking->ticket->event->organizer_id !== auth()->id()) {
             abort(403, 'Unauthorized access.');
         }
@@ -86,67 +72,47 @@ class BookingController extends Controller
         return view('organizer.bookings.show', compact('booking'));
     }
 
-    /**
-     * Approve a booking.
-     */
     public function approve(Booking $booking)
     {
-        // Authorization: hanya bisa approve booking untuk event sendiri
         if ($booking->ticket->event->organizer_id !== auth()->id()) {
             abort(403, 'Unauthorized access.');
         }
 
-        // Check if already approved
         if ($booking->status === 'approved') {
             return back()->with('info', 'Booking is already approved.');
         }
 
-        // Check if booking is cancelled
         if ($booking->status === 'cancelled') {
             return back()->with('error', 'Cannot approve a cancelled booking.');
         }
 
-        // Approve booking
         $booking->update([
             'status' => 'approved'
         ]);
 
-        // TODO: Send email to user with digital ticket (optional)
-        // Mail::to($booking->user->email)->send(new BookingApproved($booking));
-
+    
         return back()->with('success', "Booking #{$booking->booking_code} has been approved.");
     }
 
-    /**
-     * Reject a booking.
-     */
     public function reject(Booking $booking)
     {
-        // Authorization: hanya bisa reject booking untuk event sendiri
         if ($booking->ticket->event->organizer_id !== auth()->id()) {
             abort(403, 'Unauthorized access.');
         }
 
-        // Check if already rejected
         if ($booking->status === 'rejected') {
             return back()->with('info', 'Booking is already rejected.');
         }
 
-        // Check if booking is cancelled
         if ($booking->status === 'cancelled') {
             return back()->with('error', 'Cannot reject a cancelled booking.');
         }
 
-        // Reject booking
         $booking->update([
             'status' => 'rejected'
         ]);
 
-        // Kembalikan quota tiket
         $booking->ticket->increment('quota_remaining', $booking->quantity);
-
-        // TODO: Send email to user (optional)
-        // Mail::to($booking->user->email)->send(new BookingRejected($booking));
 
         return back()->with('success', "Booking #{$booking->booking_code} has been rejected. Ticket quota has been restored.");
     }

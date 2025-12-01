@@ -1,4 +1,3 @@
-{{-- resources/views/admin/organizers/approval.blade.php --}}
 @extends('layouts.admin')
 
 @section('header', 'Persetujuan Organizer')
