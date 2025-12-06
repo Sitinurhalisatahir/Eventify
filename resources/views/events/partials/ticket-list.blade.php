@@ -3,7 +3,14 @@
     <h3 class="text-xl font-bold text-gray-900 mb-6">Pilihan Tiket</h3>
     <div class="space-y-4">
         @if($event->tickets->count() > 0)
-            @foreach($event->tickets as $ticket)
+            @php
+
+                $sortedTickets = $event->tickets->sortBy(function($ticket) {
+                    return (int) str_replace('.', '', $ticket->price);
+                });
+            @endphp
+            
+            @foreach($sortedTickets as $ticket)
                 <div class="border border-gray-200 rounded-xl p-6 hover:border-[#e6527b] transition-all duration-300 hover:shadow-md">
                     <div class="flex flex-col lg:flex-row lg:items-start gap-6">
                         <!-- Ticket Image -->
@@ -25,6 +32,10 @@
                                     @if($ticket->description)
                                         <p class="text-gray-600 text-sm mb-4 leading-relaxed">{{ $ticket->description }}</p>
                                     @endif
+                                    <!-- Display price as number for debugging -->
+                                    <p class="text-xs text-gray-400">
+                                        Numeric value: {{ (int) str_replace('.', '', $ticket->price) }}
+                                    </p>
                                 </div>
                                 
                                 <!-- Price & Availability -->

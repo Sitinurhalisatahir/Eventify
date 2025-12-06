@@ -6,14 +6,12 @@ use App\Models\Event;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-
 class EventController extends Controller
 {
     public function index(Request $request)
     {
         $query = Event::with(['category', 'organizer', 'tickets'])
-            ->where('status', 'published')
-            ->latest();
+            ->where('status', 'published');
 
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);
@@ -33,10 +31,10 @@ class EventController extends Controller
         if ($request->filled('filter')) {
             if ($request->filter === 'upcoming') {
                 $query->where('event_date', '>', now());
-                } elseif ($request->filter === 'past') {
-                    $query->where('event_date', '<', now());
-                }
-    }
+            } elseif ($request->filter === 'past') {
+                $query->where('event_date', '<', now());
+            }
+        }
 
         if ($request->filled('date_from')) {
             $query->where('event_date', '>=', $request->date_from);
@@ -48,7 +46,8 @@ class EventController extends Controller
 
         $query->whereHas('tickets');
 
-        $sortBy = $request->get('sort_by', 'date'); 
+        $sortBy = $request->get('sort_by', 'date');
+        
         switch ($sortBy) {
             case 'date':
                 $query->orderBy('event_date', 'asc');
@@ -57,20 +56,20 @@ class EventController extends Controller
                 $query->orderBy('name', 'asc');
                 break;
             case 'price_low':
-                $query->select('events.*')
-                    ->join('tickets', function($join) {
-                        $join->on('events.id', '=', 'tickets.event_id')
-                        ->whereRaw('tickets.price = (SELECT MIN(price) FROM tickets WHERE tickets.event_id = events.id AND price IS NOT NULL)');
-                    })
-                    ->orderBy('tickets.price', 'asc');
+                $query->addSelect(['min_price' => function($query) {
+                    $query->selectRaw('CAST(MIN(price) AS UNSIGNED)')
+                          ->from('tickets')
+                          ->whereColumn('event_id', 'events.id')
+                          ->whereNotNull('price');
+                }])->orderBy('min_price', 'asc');
                 break;
             case 'price_high':
-                $query->select('events.*')
-                    ->join('tickets', function($join) {
-                        $join->on('events.id', '=', 'tickets.event_id')
-                        ->whereRaw('tickets.price = (SELECT MAX(price) FROM tickets WHERE tickets.event_id = events.id AND price IS NOT NULL)');
-                    })
-                    ->orderBy('tickets.price', 'desc');
+                $query->addSelect(['max_price' => function($query) {
+                    $query->selectRaw('CAST(MAX(price) AS UNSIGNED)')
+                          ->from('tickets')
+                          ->whereColumn('event_id', 'events.id')
+                          ->whereNotNull('price');
+                }])->orderBy('max_price', 'desc');
                 break;
             default:
                 $query->orderBy('event_date', 'asc');
@@ -79,82 +78,78 @@ class EventController extends Controller
         $events = $query->paginate(12)->withQueryString();
 
         $categories = Category::withCount(['events' => function ($q) {
-        $q->where('status', 'published');
+            $q->where('status', 'published');
         }])
         ->having('events_count', '>', 0)
         ->get();
         
-
         return view('events.index', compact('events', 'categories'));
     }
 
-   public function show(Event $event)
-{
-    if ($event->status !== 'published') {
-        abort(404);
-    }
-
-    $event->load([
-        'category',
-        'organizer',
-        'tickets' => function ($query) {
-            $query->where('quota_remaining', '>', 0)
-                  ->orderBy('price', 'asc');
-        },
-        'reviews' => function ($query) {
-            $query->with('user')->latest()->take(10);
+    public function show(Event $event)
+    {
+        if ($event->status !== 'published') {
+            abort(404);
         }
-    ]);
 
+        $event->load([
+            'category',
+            'organizer',
+            'tickets' => function ($query) {
+                $query->where('quota_remaining', '>', 0)
+                      ->orderByRaw('CAST(price AS UNSIGNED) ASC');
+            },
+            'reviews' => function ($query) {
+                $query->with('user')->latest()->take(10);
+            }
+        ]);
 
-    $isFavorited = false;
-    if (auth()->check()) {
-        $isFavorited = $event->favorites()
-            ->where('user_id', auth()->id())
-            ->exists();
-    }
-
-    $canReview = false;
-    $userBooking = null;
-    if (auth()->check() && auth()->user()->role === 'user') {
-        $userBooking = $event->bookings()
-            ->where('user_id', auth()->id())
-            ->where('status', 'approved')
-            ->whereHas('ticket.event', function ($query) {
-                $query->where('event_date', '<', now());
-            })
-            ->first();
-
-        if ($userBooking) {
-
-            $hasReviewed = $event->reviews()
+        $isFavorited = false;
+        if (auth()->check()) {
+            $isFavorited = $event->favorites()
                 ->where('user_id', auth()->id())
                 ->exists();
-            
-            $canReview = !$hasReviewed;
         }
+
+        $canReview = false;
+        $userBooking = null;
+        if (auth()->check() && auth()->user()->role === 'user') {
+            $userBooking = $event->bookings()
+                ->where('user_id', auth()->id())
+                ->where('status', 'approved')
+                ->whereHas('ticket.event', function ($query) {
+                    $query->where('event_date', '<', now());
+                })
+                ->first();
+
+            if ($userBooking) {
+                $hasReviewed = $event->reviews()
+                    ->where('user_id', auth()->id())
+                    ->exists();
+                
+                $canReview = !$hasReviewed;
+            }
+        }
+
+        $averageRating = $event->reviews()->avg('rating') ?? 0;
+        $totalReviews = $event->reviews()->count();
+
+        $similarEvents = Event::with(['category', 'tickets'])
+            ->where('category_id', $event->category_id)
+            ->where('id', '!=', $event->id)
+            ->where('status', 'published')
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return view('events.show', compact(
+            'event',
+            'isFavorited',
+            'canReview',
+            'userBooking',
+            'averageRating',
+            'totalReviews',
+            'similarEvents'
+        ));
     }
-
-    $averageRating = $event->reviews()->avg('rating') ?? 0;
-    $totalReviews = $event->reviews()->count();
-
-    $similarEvents = Event::with(['category', 'tickets'])
-        ->where('category_id', $event->category_id)
-        ->where('id', '!=', $event->id)
-        ->where('status', 'published')
-        ->inRandomOrder()
-        ->take(4)
-        ->get();
-
-    return view('events.show', compact(
-        'event',
-        'isFavorited',
-        'canReview',
-        'userBooking',
-        'averageRating',
-        'totalReviews',
-        'similarEvents'
-    ));
-}
-    
 }
