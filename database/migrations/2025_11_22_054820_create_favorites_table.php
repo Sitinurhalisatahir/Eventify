@@ -13,7 +13,21 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
+            
+            $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onDelete('cascade');
+            
+            $table->foreignId('event_id')
+                  ->constrained('events')
+                  ->onDelete('cascade');
+            
             $table->timestamps();
+            
+            $table->unique(['user_id', 'event_id']);
+            
+            $table->index('user_id');
+            $table->index('event_id');
         });
     }
 

@@ -1,65 +1,115 @@
 <?php
+// app/Http/Controllers/Organizer/TicketController.php
 
 namespace App\Http\Controllers\Organizer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTicketRequest;
+use App\Models\Event;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function create(Event $event)
     {
-        //
+        if ($event->organizer_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        return view('organizer.tickets.create', compact('event'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreTicketRequest $request, Event $event)
     {
-        //
+        if ($event->organizer_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        $data = $request->validated();
+        $data['event_id'] = $event->id;
+
+        $data['quota_remaining'] = $data['quota'];
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('tickets', 'public');
+        }
+
+        Ticket::create($data);
+
+        return redirect()
+            ->route('organizer.events.show', $event)
+            ->with('success', 'Ticket created successfully.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    
+    public function edit(Ticket $ticket)
     {
-        //
+        if ($ticket->event->organizer_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        $ticket->load('event');
+        
+        return view('organizer.tickets.edit', compact('ticket'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(StoreTicketRequest $request, Ticket $ticket)
     {
-        //
+        if ($ticket->event->organizer_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        $data = $request->validated();
+
+        if (isset($data['quota']) && $data['quota'] != $ticket->quota) {
+            $soldTickets = $ticket->quota - $ticket->quota_remaining;
+            $newQuotaRemaining = $data['quota'] - $soldTickets;
+            
+            if ($newQuotaRemaining < 0) {
+                return back()->with('error', "Cannot set quota to {$data['quota']}. Already sold {$soldTickets} tickets.");
+            }
+            
+            $data['quota_remaining'] = $newQuotaRemaining;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($ticket->image) {
+                Storage::disk('public')->delete($ticket->image);
+            }
+            
+            $data['image'] = $request->file('image')->store('tickets', 'public');
+        }
+
+        $ticket->update($data);
+
+        return redirect()
+            ->route('organizer.events.show', $ticket->event_id)
+            ->with('success', 'Ticket updated successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(Ticket $ticket)
     {
-        //
-    }
+        if ($ticket->event->organizer_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if ($ticket->bookings()->count() > 0) {
+            return back()->with('error', 'Cannot delete ticket with existing bookings. Please cancel bookings first.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $eventId = $ticket->event_id;
+
+        if ($ticket->image) {
+            Storage::disk('public')->delete($ticket->image);
+        }
+
+        $ticketName = $ticket->name;
+        $ticket->delete();
+
+        return redirect()
+            ->route('organizer.events.show', $eventId)
+            ->with('success', "Ticket '{$ticketName}' has been deleted successfully.");
     }
 }
