@@ -56,15 +56,26 @@
             @endif
         </div>
 
-        <!-- Popularity Badge - FIXED HEIGHT -->
-        <div class="mb-2 h-7 flex items-center">
-            @if($event->bookings_count > 0)
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
-                    <i class="fas fa-fire mr-1"></i>
-                    {{ $event->bookings_count }} Terjual
-                </span>
-            @endif
-        </div>
+  <!-- Popularity Badge - FIXED HEIGHT -->
+  <div class="mb-2 h-7 flex items-center">
+    @if($event->successful_bookings_count > 0)
+        @if($event->isUpcoming())
+        
+        {{-- Acara AKAN DATANG --}}
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
+            <i class="fas fa-fire mr-1"></i>
+            {{ $event->successful_bookings_count }} Tiket Terjual
+        </span>
+        @elseif($event->isPast())
+
+        {{-- Acara SUDAH LEWAT --}}
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 border border-blue-200">
+            <i class="fas fa-users mr-1"></i>
+            {{ $event->successful_bookings_count }} Peserta
+        </span>
+        @endif
+        @endif
+    </div>
 
         <!-- Event Name - FIXED 2 LINES -->
         <h3 class="font-bold text-xl text-gray-800 mb-3 line-clamp-2 h-14 hover:text-[#262363] transition-colors">

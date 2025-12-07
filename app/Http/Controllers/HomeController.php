@@ -13,13 +13,19 @@ class HomeController extends Controller
     public function index()
     {
         $featuredEvents = Event::with(['category', 'organizer', 'tickets'])
-            ->where('status', 'published')
-            ->where('event_date', '>', now())
-            ->whereHas('tickets')
-            ->withCount('bookings')
-            ->orderBy('bookings_count', 'desc')
-            ->paginate(6);  
-       
+        ->where('status', 'published')
+        ->where('event_date', '>', now())
+        ->whereHas('tickets')
+        ->addSelect(['successful_tickets' => function($query) {
+            $query->selectRaw('COALESCE(SUM(bookings.quantity), 0)')
+              ->from('bookings')
+              ->join('tickets', 'bookings.ticket_id', '=', 'tickets.id')
+              ->whereColumn('tickets.event_id', 'events.id')
+              ->where('bookings.status', 'approved');
+            }])
+        ->orderBy('successful_tickets', 'desc')
+        ->paginate(6);
+        
         $upcomingEvents = Event::with(['category', 'organizer', 'tickets'])
             ->where('status', 'published')
             ->where('event_date', '>', now())
