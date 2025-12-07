@@ -140,4 +140,11 @@ class Event extends Model
     {
         return $query->where('category_id', $categoryId);
     }
+
+      public function getSuccessfulBookingsCountAttribute(): int
+    {
+        return $this->bookings()
+            ->where('status', 'approved')
+            ->sum('quantity');
+    }
 }
