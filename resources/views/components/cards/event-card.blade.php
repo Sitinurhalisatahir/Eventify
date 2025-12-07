@@ -1,7 +1,7 @@
 {{-- resources/views/components/cards/event-card.blade.php --}}
-<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border-0 hover:scale-[1.02]">
-    <!-- Event Image - FULL tanpa potongan -->
-    <div class="relative h-48 overflow-hidden">
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border-0 hover:scale-[1.02] flex flex-col h-full">
+    <!-- Event Image - FIXED HEIGHT -->
+    <div class="relative h-48 overflow-hidden flex-shrink-0">
         @if($event->image)
             <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" 
                  class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
@@ -29,11 +29,9 @@
         </div>
 
         <!-- Organizer Badge -->
-        <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded-full text-xs">
+        <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded-full text-xs truncate max-w-[180px]">
             <i class="fas fa-user mr-1"></i>{{ $event->organizer->name }}
         </div>
-        
-       
         
         <!-- Sold Out Overlay -->
         @if(!$event->hasAvailableTickets() && $event->isUpcoming())
@@ -46,29 +44,39 @@
         @endif
     </div>
 
-    <!-- Event Content -->
-    <div class="p-5">
-        <!-- Category -->
-        @if($event->category)
-            <div class="mb-3">
+    <!-- Event Content - FLEX GROW -->
+    <div class="p-5 flex flex-col flex-1">
+        <!-- Category - FIXED HEIGHT -->
+        <div class="mb-3 h-7 flex items-center">
+            @if($event->category)
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#e692b7]/10 text-[#262363] border border-[#e692b7]/20">
                     <i class="{{ $event->category->icon }} mr-1"></i>
                     {{ $event->category->name }}
                 </span>
-            </div>
-        @endif
+            @endif
+        </div>
 
-        <!-- Event Name -->
-        <h3 class="font-bold text-xl text-gray-800 mb-3 line-clamp-2 hover:text-[#262363] transition-colors">
+        <!-- Popularity Badge - FIXED HEIGHT -->
+        <div class="mb-2 h-7 flex items-center">
+            @if($event->bookings_count > 0)
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
+                    <i class="fas fa-fire mr-1"></i>
+                    {{ $event->bookings_count }} Terjual
+                </span>
+            @endif
+        </div>
+
+        <!-- Event Name - FIXED 2 LINES -->
+        <h3 class="font-bold text-xl text-gray-800 mb-3 line-clamp-2 h-14 hover:text-[#262363] transition-colors">
             <a href="{{ route('events.show', $event)}}">
                 {{ $event->name }}
             </a>
         </h3>
 
-        <!-- Event Date & Location - Layout seperti contoh -->
-        <div class="space-y-3 mb-4">
+        <!-- Event Date & Location - FIXED HEIGHT -->
+        <div class="space-y-3 mb-4 flex-shrink-0">
             <div class="flex items-start text-gray-600">
-                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-0.5">
+                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
                     <i class="fas fa-calendar-day text-[#e6527b] text-sm"></i>
                 </div>
                 <div>
@@ -78,44 +86,48 @@
             </div>
             
             <div class="flex items-start text-gray-600">
-                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-0.5">
+                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
                     <i class="fas fa-map-marker-alt text-[#e6527b] text-sm"></i>
                 </div>
-                <div class="text-sm font-medium line-clamp-2">{{ $event->location }}</div>
+                <div class="text-sm font-medium line-clamp-1">{{ $event->location }}</div>
             </div>
         </div>
 
-        <!-- Rating - Tetap sama -->
-        @if($event->total_reviews > 0)
-            <div class="flex items-center mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
-                <div class="flex items-center mr-2">
-                    @for($i = 1; $i <= 5; $i++)
-                        @if($i <= floor($event->average_rating))
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                        @elseif($i == ceil($event->average_rating) && ($event->average_rating - floor($event->average_rating)) >= 0.5)
-                            <i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
-                        @else
-                            <i class="far fa-star text-gray-300 text-sm"></i>
-                        @endif
-                    @endfor
+        <!-- Rating - FIXED HEIGHT -->
+        <div class="mb-4 h-16 flex items-center flex-shrink-0">
+            @if($event->total_reviews > 0)
+                <div class="flex items-center w-full p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                    <div class="flex items-center mr-2">
+                        @for($i = 1; $i <= 5; $i++)
+                            @if($i <= floor($event->average_rating))
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            @elseif($i == ceil($event->average_rating) && ($event->average_rating - floor($event->average_rating)) >= 0.5)
+                                <i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
+                            @else
+                                <i class="far fa-star text-gray-300 text-sm"></i>
+                            @endif
+                        @endfor
+                    </div>
+                    <span class="text-sm text-gray-700 font-medium">
+                        {{ number_format($event->average_rating, 1) }} • {{ $event->total_reviews }} ulasan
+                    </span>
                 </div>
-                <span class="text-sm text-gray-700 font-medium">
-                    {{ number_format($event->average_rating, 1) }} • {{ $event->total_reviews }} ulasan
-                </span>
-            </div>
-        @else
-            <div class="text-sm text-gray-500 mb-4 font-medium">
-                <i class="far fa-star mr-1 text-gray-400"></i> Belum ada ulasan
-            </div>
-        @endif
+            @else
+                <div class="text-sm text-gray-500 font-medium">
+                    <i class="far fa-star mr-1 text-gray-400"></i> Belum ada ulasan
+                </div>
+            @endif
+        </div>
 
-        <!-- Price & Availability - Layout seperti contoh -->
-        <div class="flex justify-between items-center mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <!-- SPACER - Push buttons to bottom -->
+        <div class="flex-1"></div>
+
+        <!-- Price & Availability - FIXED HEIGHT -->
+        <div class="flex justify-between items-center mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200 flex-shrink-0">
             <div>
                 <div class="text-xs text-gray-500 font-medium">MULAI DARI</div>
                 <div class="font-bold text-[#262363] text-xl">
-                    Rp{{ number_format($event->cheapest_price, 0, ',', '.') }}
-                </div>
+                    Rp{{ number_format($event->sorted_price ?? $event->cheapest_price, 0, ',', '.') }}</div>
             </div>
             <div class="text-right">
                 <div class="text-sm font-semibold {{ $event->hasAvailableTickets() ? 'text-green-600' : 'text-red-600' }}">
@@ -128,8 +140,8 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex space-x-3">
+        <!-- Action Buttons - ALWAYS AT BOTTOM -->
+        <div class="flex space-x-3 flex-shrink-0">
             <a href="{{ route('events.show', $event) }}" 
                class="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-center py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center">
                 <i class="fas fa-eye mr-2"></i>Detail
@@ -138,11 +150,11 @@
             @if($event->isPublished() && $event->hasAvailableTickets() && $event->isUpcoming())
                 <a href="{{ route('events.show', $event) }}#booking" 
                    class="flex-1 bg-[#e6527b] text-white hover:bg-[rgb(226,61,108)] text-center py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
-                    <i class="fas fa-ticket-alt mr-2"></i>Pesan Sekarang
+                    <i class="fas fa-ticket-alt mr-2"></i>Pesan
                 </a>
             @elseif($event->isPast())
                 <button class="flex-1 bg-gray-300 text-gray-500 text-center py-3 px-4 rounded-xl font-semibold cursor-not-allowed flex items-center justify-center">
-                    <i class="fas fa-history mr-2"></i>Acara Selesai
+                    <i class="fas fa-history mr-2"></i>Selesai
                 </button>
             @endif
         </div>

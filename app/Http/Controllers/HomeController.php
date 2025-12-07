@@ -16,7 +16,8 @@ class HomeController extends Controller
             ->where('status', 'published')
             ->where('event_date', '>', now())
             ->whereHas('tickets')
-            ->inRandomOrder()
+            ->withCount('bookings')
+            ->orderBy('bookings_count', 'desc')
             ->paginate(6);  
        
         $upcomingEvents = Event::with(['category', 'organizer', 'tickets'])

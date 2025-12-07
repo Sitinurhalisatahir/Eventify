@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Event::with(['category', 'organizer', 'tickets'])
-            ->where('status', 'published');
+        $query = Event::with(['category', 'organizer', 'tickets' => function($q) {
+            $q->where('quota_remaining', '>', 0);
+        }])->where('status', 'published');
 
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);
@@ -44,38 +46,78 @@ class EventController extends Controller
             $query->where('event_date', '<=', $request->date_to);
         }
 
-        $query->whereHas('tickets');
+        $query->whereHas('tickets', function($q) {
+            $q->where('quota_remaining', '>', 0);
+        });
 
         $sortBy = $request->get('sort_by', 'date');
         
-        switch ($sortBy) {
-            case 'date':
-                $query->orderBy('event_date', 'asc');
-                break;
-            case 'name':
-                $query->orderBy('name', 'asc');
-                break;
-            case 'price_low':
-                $query->addSelect(['min_price' => function($query) {
-                    $query->selectRaw('CAST(MIN(price) AS UNSIGNED)')
-                          ->from('tickets')
-                          ->whereColumn('event_id', 'events.id')
-                          ->whereNotNull('price');
-                }])->orderBy('min_price', 'asc');
-                break;
-            case 'price_high':
-                $query->addSelect(['max_price' => function($query) {
-                    $query->selectRaw('CAST(MAX(price) AS UNSIGNED)')
-                          ->from('tickets')
-                          ->whereColumn('event_id', 'events.id')
-                          ->whereNotNull('price');
-                }])->orderBy('max_price', 'desc');
-                break;
-            default:
-                $query->orderBy('event_date', 'asc');
-        }
+        if (in_array($sortBy, ['price_low', 'price_high'])) {
+            $allEvents = $query->get();
+            
+            $eventsWithPrice = [];
+            foreach($allEvents as $event) {
+                $availableTickets = $event->tickets->where('quota_remaining', '>', 0);
+                
+                if ($sortBy === 'price_low') {
+                    $sortPrice = $availableTickets->min('price') ?? 999999999;
+                } else {
+                    $sortPrice = $availableTickets->max('price') ?? 0;
+                }
+                
+                $eventsWithPrice[] = [
+                    'event' => $event,
+                    'sort_price' => (float) $sortPrice
+                ];
+            }
+            
+          
+            usort($eventsWithPrice, function($a, $b) use ($sortBy) {
+                if ($sortBy === 'price_low') {
+                    $priceComparison = $a['sort_price'] <=> $b['sort_price'];
+                } else {
+                    $priceComparison = $b['sort_price'] <=> $a['sort_price'];
+                }
+                
+               
+                if ($priceComparison !== 0) {
+                    return $priceComparison;
+                }
+                
+                return strcmp($a['event']->name, $b['event']->name);
+            });
+            
+            $sortedEvents = collect(array_map(function($item) {
+                $item['event']->sorted_price = $item['sort_price'];
+                return $item['event'];
+            }, $eventsWithPrice));
 
-        $events = $query->paginate(12)->withQueryString();
+           
+            $page = $request->get('page', 1);
+            $perPage = 12;
+            $total = $sortedEvents->count();
+            
+            $events = new \Illuminate\Pagination\LengthAwarePaginator(
+                $sortedEvents->forPage($page, $perPage)->values(),
+                $total,
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+        } else {
+            switch ($sortBy) {
+                case 'date':
+                    $query->orderBy('event_date', 'asc');
+                    break;
+                case 'name':
+                    $query->orderBy('name', 'asc');
+                    break;
+                default:
+                    $query->orderBy('event_date', 'asc');
+            }
+            
+            $events = $query->paginate(12)->withQueryString();
+        }
 
         $categories = Category::withCount(['events' => function ($q) {
             $q->where('status', 'published');
@@ -97,7 +139,7 @@ class EventController extends Controller
             'organizer',
             'tickets' => function ($query) {
                 $query->where('quota_remaining', '>', 0)
-                      ->orderByRaw('CAST(price AS UNSIGNED) ASC');
+                      ->orderBy('price', 'asc');
             },
             'reviews' => function ($query) {
                 $query->with('user')->latest()->take(10);
