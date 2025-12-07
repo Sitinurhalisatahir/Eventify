@@ -1,5 +1,25 @@
-<div>
-    <form method="GET" action="{{ url()->current() }}">
+<div class="flex items-center justify-between mb-6">
+    <form method="GET" action="{{ route('events.index') }}" class="flex items-center gap-3">
+        {{-- Preserve other filters --}}
+        @if(request('category'))
+            <input type="hidden" name="category" value="{{ request('category') }}">
+        @endif
+        @if(request('location'))
+            <input type="hidden" name="location" value="{{ request('location') }}">
+        @endif
+        @if(request('search'))
+            <input type="hidden" name="search" value="{{ request('search') }}">
+        @endif
+        @if(request('filter'))
+            <input type="hidden" name="filter" value="{{ request('filter') }}">
+        @endif
+        @if(request('date_from'))
+            <input type="hidden" name="date_from" value="{{ request('date_from') }}">
+        @endif
+        @if(request('date_to'))
+            <input type="hidden" name="date_to" value="{{ request('date_to') }}">
+        @endif
+        
         <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Urutkan:</label>
         <select name="sort_by" 
                 onchange="this.form.submit()" 
